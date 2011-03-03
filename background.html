@@ -1,0 +1,66 @@
+<html>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<head>
+	//blogger api needs to be retrieved in a head block.
+	google.load("gdata", "1.1");
+	google.setOnLoadCallback(runAfterLibLoad);
+	
+
+	/**
+	 * Call back which can run after the api has been loaded from blogger. Retrieves data
+	 * if doing update and pass on to popup.
+	 */
+	function runAfterLibLoad(){
+		console.log("loaded");
+		//load current blog post if one is open.
+		
+	}
+
+</head>
+  <script>
+
+	/**
+	 *
+	 */
+	function setData(data) {
+		var currentURL = "";
+		//chrome.tabs.getCurrent(function(tab) {currentURL =  tab.URL;});
+		//console.log("curr URL=" + currentURL);
+		getURL_please();
+		var toString = "rec-name:"+ data.$recname + " ingrediants:"+ data.$ingredients;
+		console.log("got data:  "+toString)
+
+		var hRecipeCode = convertTohRecipe(data);
+
+		postToBlogger(hRecipeCode);
+
+		console.log("done");
+	}
+
+
+function getURL_please(){
+  chrome.tabs.getSelected(null, function(tab) {    
+    var url = tab.url;
+	console.log("url=="+url);
+    // Do what you want here.
+  });   
+}
+
+	/**
+	 *
+	 */
+	function convertTohRecipe(data) {
+
+		return "";
+	}
+
+	/**
+	 *
+	 */
+	function postToBlogger(hRecipeCode) {
+
+	}
+
+
+  </script>
+</html>
