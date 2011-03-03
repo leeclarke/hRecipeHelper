@@ -1,16 +1,25 @@
 <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="jquery.url.js"></script>
 <script type="text/javascript" src="formData.js"></script>
 <script>
 
+	/**
+	 * Loads existing hRecipe data into fields based on URL and presence of data.
+	 */
 	function loadBlogData() {
-		console.log("Load Blog posting info here if on a current posting.");
-//if not on blogger, try to get current field on page for poosting results into.
+		console.log("Load Blog posting.");
+		chrome.extension.getBackgroundPage().checkURLAction('load');
+		
 	}
 	
+	
 	$(document).ready(loadBlogData);
-
-
+	
+	/**
+	 * collect data and send to background for posting.
+	 */
 	function postData() {
+//TODO: Add form validation for name and ingredients : required and type checks for rest.	
 		var formData = new FormData();		
 		formData.$recname = $('#Rec-Name').val();		
 		formData.$ingredients = getFormArray('ingredient');
@@ -27,9 +36,14 @@
 		window.close();
 	}
 	
+	/**
+	 * retrieve array fo same name input fields.
+	 */
 	function getFormArray(id) {
 		return $("input[id='"+id+"']").map(function(){return $(this).val();}).get();
 	}
+	
+//TODO: Add function to add more ingrediants fields.
 </script>
 <style>
 body {

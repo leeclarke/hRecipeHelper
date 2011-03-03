@@ -1,6 +1,10 @@
 <html>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="jquery.url.js"></script>
+<script type="text/javascript" src="formData.js"></script>
 <head>
+	
 	//blogger api needs to be retrieved in a head block.
 	google.load("gdata", "1.1");
 	google.setOnLoadCallback(runAfterLibLoad);
@@ -11,14 +15,15 @@
 	 * if doing update and pass on to popup.
 	 */
 	function runAfterLibLoad(){
-		console.log("loaded");
-		//load current blog post if one is open.
-		
+				
 	}
 
 </head>
   <script>
-
+	var BLOGGER = "www.blogger.com";
+	var BLOGGER_POST = "/post-edit.g";
+	var BLOGGER_CREATE = "/post-create.g";
+	
 	/**
 	 *
 	 */
@@ -26,39 +31,107 @@
 		var currentURL = "";
 		//chrome.tabs.getCurrent(function(tab) {currentURL =  tab.URL;});
 		//console.log("curr URL=" + currentURL);
-		getURL_please();
-		var toString = "rec-name:"+ data.$recname + " ingrediants:"+ data.$ingredients;
+		
+		var toString = "rec-name:"+ data.$recname + " ingrediants:"+ data.$ingredients + " yield:" + data.$yield;
 		console.log("got data:  "+toString)
 
 		var hRecipeCode = convertTohRecipe(data);
-
+		console.log("hrecipe=="+hRecipeCode);
+		
 		postToBlogger(hRecipeCode);
 
 		console.log("done");
 	}
 
 
-function getURL_please(){
-  chrome.tabs.getSelected(null, function(tab) {    
-    var url = tab.url;
-	console.log("url=="+url);
-    // Do what you want here.
-  });   
-}
+	/**
+	 * Looks at the URL to determine what should be done given the action type of 'load' or 'post',
+	 * based on the site in current browser tab.
+	 * @param - actionType ('load'|'post')
+	 */
+	function checkURLAction(actionType){	
+		chrome.tabs.getSelected(null, function(tab) {    
+		var url = tab.url;						
+		jQuery.url.setUrl(url)
+		console.log("HOST="+jQuery.url.attr("host"));
+
+
+		//Determine Active WebApp and act acordingly
+		if(BLOGGER == jQuery.url.attr("host")) {
+			console.log("GOT BLOGGER");
+
+			var blogID = jQuery.url.param("blogID");
+			B_blogID = blogID; 
+			if(BLOGGER_POST == jQuery.url.attr("path")) {
+				console.log("GOT POST");
+				console.log("postID="+jQuery.url.param("postID"))
+				//TODO: Act on type Here?
+				if("load" == actionType) {
+
+					retrieveBloggerData();
+					populateFieldData();
+				}
+				else if("post" == actionType) {
+
+				}
+			}
+			else { 
+				console.log("IN Create a new BLOGGER Post");
+				//Not much to do here if new posting.
+				if("post" == actionType) {
+					//post to blogger!
+				}
+			}
+		}
+		else {
+		//TODO: get selected text field and post code to there, if none selected then err
+			if("load" == actionType) {
+				populateFieldData();
+
+			}
+			else if("post" == actionType) {
+
+			}
+		}
+
+
+		});   
+	}
+
+	/**
+	 * If doing a blogger update then grab existing post data so can parse and or insert recipe.
+	 */
+	function retrieveBloggerData(blogID, postID) {
+		//TODO: you know what to do!
+	}
+	
+	/**
+	 * Inspect the provided html, parse out hRecipe data if present and sets form fields.
+	 */
+	function populateFieldData() {
+		//TODO: you know what to do!
+	}
 
 	/**
 	 *
 	 */
 	function convertTohRecipe(data) {
-
-		return "";
+		var microformat = "<div class=\"hrecipe\">";
+		if(data){
+			
+			microformat += ("<h1 class=\"fn\">" + data.$recname + "</h1>");
+			microformat += ("<span class=\"yield\">"+data.$yield+"</span>");
+		}
+		
+		microformat += "</div>";
+		return microformat;
 	}
 
 	/**
 	 *
 	 */
 	function postToBlogger(hRecipeCode) {
-
+		
 	}
 
 
