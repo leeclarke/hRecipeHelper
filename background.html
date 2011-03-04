@@ -4,7 +4,7 @@
 <script type="text/javascript" src="jquery.url.js"></script>
 <script type="text/javascript" src="formData.js"></script>
 <head>
-	
+	<script>
 	//blogger api needs to be retrieved in a head block.
 	google.load("gdata", "1.1");
 	google.setOnLoadCallback(runAfterLibLoad);
@@ -17,7 +17,7 @@
 	function runAfterLibLoad(){
 				
 	}
-
+	</script>
 </head>
   <script>
 	var BLOGGER = "www.blogger.com";
@@ -25,7 +25,8 @@
 	var BLOGGER_CREATE = "/post-create.g";
 	
 	/**
-	 *
+	 * //Cant use Chrome with the Blogger api with out getting an ugly popup... so odd come on google really?
+	 * Moving output to the popup to display for copy/paste
 	 */
 	function setData(data) {
 		var currentURL = "";
@@ -43,7 +44,7 @@
 		console.log("done");
 	}
 
-
+	
 	/**
 	 * Looks at the URL to determine what should be done given the action type of 'load' or 'post',
 	 * based on the site in current browser tab.
@@ -59,9 +60,10 @@
 		//Determine Active WebApp and act acordingly
 		if(BLOGGER == jQuery.url.attr("host")) {
 			console.log("GOT BLOGGER");
-
+			// Create the blogger service object
+			var bloggerService = new google.gdata.blogger.BloggerService('GoogleInc-jsguide-1.0');
 			var blogID = jQuery.url.param("blogID");
-			B_blogID = blogID; 
+			//B_blogID = blogID; 
 			if(BLOGGER_POST == jQuery.url.attr("path")) {
 				console.log("GOT POST");
 				console.log("postID="+jQuery.url.param("postID"))
@@ -72,7 +74,11 @@
 					populateFieldData();
 				}
 				else if("post" == actionType) {
+					if(blogID) {//update
+						
+					} else {
 
+					}
 				}
 			}
 			else { 
