@@ -21,3 +21,13 @@ function FormData() {
 FormData.prototype.toJSON = function() {
 	return JSON.stringify(this);
 }
+
+
+// Little debug method to keep it all clean 
+var debugEnabled = true;
+
+function debug(msg) {
+	if(debugEnabled) {
+		console.log(msg);
+	}
+}

@@ -20,19 +20,25 @@
 	 */
 	function postData() {
 //TODO: Add form validation for name and ingredients : required and type checks for rest.	
+
 		var formData = new FormData();		
 		formData.$recname = $('#Rec-Name').val();		
 		formData.$ingredients = getFormArray('ingredient');
 		formData.$yield = $('#yield').val();
-		formData.$duration = $('#duration').val();
-		formData.$photo = $('#photo').val();
-		formData.$author = $('#author').val();
+		formData.$duration = getFormArray('duration');
+		formData.$photo = getFormArray('#photo');
+		formData.$author = getFormArray('#author');
 		formData.$published = $('#published').val();
-		
+		formData.$instructions = $('#instructions').val();
 		formData.$nutritions = getFormArray('nutrition');
+		formData.$summery = $('#summery').val();
 		formData.$tags = $('#tag').val();
 		
-		chrome.extension.getBackgroundPage().setData(formData);
+		chrome.extension.getBackgroundPage().processData(formData);
+		//window.close();
+	}
+	
+	function done() {
 		window.close();
 	}
 	
@@ -70,6 +76,7 @@ body {
 <div><label for="nutrition">Nutrition</label><input type="text" id="nutrition" name="nutrition"/></div>
 <div><label for="nutrition">Nutrition</label><input type="text" id="nutrition" name="nutrition"/></div>
 <div><label for="tag">Tags</label><input type="text" id="tag" name="tag"/></div>
-<div><input type="button" id="ok" value="Insert" onClick='postData();'></div>
+<div><label for="outputType">Output Results to:</label><br>    <input type="radio" name="outputType" id="outputType" value="field" checked> Current field on Page<input type="radio" name="outputType" id="outputType" value="display"> Display Here </div>
+<div><input type="button" id="ok" value="Microformat it!" onClick='postData();'>    <input type="button" id="done" value="Close" onClick='done();'></div>
 </body>
 </html>

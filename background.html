@@ -23,31 +23,32 @@
 	var BLOGGER = "www.blogger.com";
 	var BLOGGER_POST = "/post-edit.g";
 	var BLOGGER_CREATE = "/post-create.g";
+
 	
 	/**
 	 * //Cant use Chrome with the Blogger api with out getting an ugly popup... so odd come on google really?
 	 * Moving output to the popup to display for copy/paste
 	 */
-	function setData(data) {
+	function processData(data) {
 		var currentURL = "";
-		//chrome.tabs.getCurrent(function(tab) {currentURL =  tab.URL;});
-		//console.log("curr URL=" + currentURL);
-		
+		//debug		
 		var toString = "rec-name:"+ data.$recname + " ingrediants:"+ data.$ingredients + " yield:" + data.$yield;
-		console.log("got data:  "+toString)
+		debug("got data:  "+toString)
 
 		var hRecipeCode = convertTohRecipe(data);
-		console.log("hrecipe=="+hRecipeCode);
+		debug("hrecipe=="+hRecipeCode);
 		
-		postToBlogger(hRecipeCode);
-
-		console.log("done");
+		chrome.tabs.executeScript(null, {code:"updateText('"+hRecipeCode+"')"})		
+		debug("done");
 	}
 
-	
+//TODO:clean up junk below.	
 	/**
 	 * Looks at the URL to determine what should be done given the action type of 'load' or 'post',
-	 * based on the site in current browser tab.
+	 * based on the site in current browser tab. 
+	 *
+	 * This might still be useful for knowing where to get data for loading but then again maybe goign 
+	 * off the current field is enough.?
 	 * @param - actionType ('load'|'post')
 	 */
 	function checkURLAction(actionType){	
@@ -56,59 +57,21 @@
 		jQuery.url.setUrl(url)
 		console.log("HOST="+jQuery.url.attr("host"));
 
-
-		//Determine Active WebApp and act acordingly
-		if(BLOGGER == jQuery.url.attr("host")) {
-			console.log("GOT BLOGGER");
-			// Create the blogger service object
-			var bloggerService = new google.gdata.blogger.BloggerService('GoogleInc-jsguide-1.0');
-			var blogID = jQuery.url.param("blogID");
-			//B_blogID = blogID; 
-			if(BLOGGER_POST == jQuery.url.attr("path")) {
-				console.log("GOT POST");
-				console.log("postID="+jQuery.url.param("postID"))
-				//TODO: Act on type Here?
-				if("load" == actionType) {
-
-					retrieveBloggerData();
-					populateFieldData();
-				}
-				else if("post" == actionType) {
-					if(blogID) {//update
-						
-					} else {
-
-					}
-				}
-			}
-			else { 
-				console.log("IN Create a new BLOGGER Post");
-				//Not much to do here if new posting.
-				if("post" == actionType) {
-					//post to blogger!
-				}
-			}
-		}
-		else {
 		//TODO: get selected text field and post code to there, if none selected then err
 			if("load" == actionType) {
 				populateFieldData();
 
 			}
 			else if("post" == actionType) {
-
+				console.log('NO BLOGGER POST');
+				var hRecipeCode = convertTohRecipe(data);
+				console.log("hrecipe=="+hRecipeCode);
+				//var currField == document.activeElement;
+				chrome.tabs.executeScript(null, {code:"updateText('TESTER')"})
+				chrome.tabs.executeScript(null, {code:"console.log('active=='+document.activeElement)"})
 			}
-		}
-
 
 		});   
-	}
-
-	/**
-	 * If doing a blogger update then grab existing post data so can parse and or insert recipe.
-	 */
-	function retrieveBloggerData(blogID, postID) {
-		//TODO: you know what to do!
 	}
 	
 	/**
@@ -119,25 +82,46 @@
 	}
 
 	/**
-	 *
+	 * Converts data to the hRecipe format with default formatting tags.
 	 */
 	function convertTohRecipe(data) {
 		var microformat = "<div class=\"hrecipe\">";
 		if(data){
 			
 			microformat += ("<h1 class=\"fn\">" + data.$recname + "</h1>");
-			microformat += ("<span class=\"yield\">"+data.$yield+"</span>");
+			if(data.$summary) microformat += ("<p class=\"summary\">" + data.$summary + "</p>");
+			if(data.$authors.length>0) microformat += ("<p class=\"authors\">" + data.$authors[0].value + "</p>");
+			if(data.$published) microformat += ("<p>Published <span class=\"published\">" + data.$published + "</span></p>");
+			if(data.$photos.length>0) {
+				microformat += ("<img src=\"" + data.$photos[0] + "\" class=\"photo\" width=\"100\" height=\"100\" alt=\"Pommes Frites\"/>");
+			}
+			microformat +="<h2>Ingredients</h2>"
+			microformat +="<ul>"
+			for(i in data.$ingredients) {
+				microformat += ("<li class=\"ingredient\">" + i.value + "</li>");
+			}
+			microformat +="</ul>"
+			
+			if(data.$instructions) {
+				microformat +="<h2>Instructions</h2>"
+				microformat += ("<span class=\"instructions\">" + data.$instructions + "</span>");
+			}
+			
+			if(data.$yield) microformat += ("<p>Yield:<span class=\"yield\">"+data.$yield+"</span></p>");
+			if(data.$durations.length>0) microformat += ("<p>Preparation time is approximately <span class=\"duration\">" + data.$duration[0] + "</span></p>")
+			
+			if(data.$nutritions.length>0) {
+				microformat +="<h2>Nutrition</h2>";
+				microformat +="<p>";
+				for(n in data.$nutritions) {
+					microformat += ("<span class=\"nutrition\">" + n.value + "</span>");
+				}
+				microformat +="</p>";
+			}    
 		}
 		
 		microformat += "</div>";
 		return microformat;
-	}
-
-	/**
-	 *
-	 */
-	function postToBlogger(hRecipeCode) {
-		
 	}
 
 
