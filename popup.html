@@ -1,15 +1,19 @@
-<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<link type="text/css" href="css/le-frog-cust/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="jquery.url.js"></script>
 <script type="text/javascript" src="formData.js"></script>
 <script>
-
+	
 	/**
 	 * Loads existing hRecipe data into fields based on URL and presence of data.
 	 */
 	function loadBlogData() {
 		console.log("Load Blog posting.");
 		chrome.extension.getBackgroundPage().checkURLAction('load');
-		
+		$('#published').datepicker();
+		$('#ok').button();
+		$('#done').button();
 	}
 	
 	
@@ -49,7 +53,16 @@
 		return $("input[id='"+id+"']").map(function(){return $(this).val();}).get();
 	}
 	
-//TODO: Add function to add more ingrediants fields.
+	function addFormField() {
+		var rowCt = $("#ingsList li").size();
+		debug(rowCt);
+		$("#ingsList").append("<li id='ingRow"+rowCt+"'><input type=\"text\" id=\"ingredient\" name=\"ingredient\"/></li>");
+		$('ingRow'+rowCt).effect("highlight", {}, 3000);		
+	}
+
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
 </script>
 <style>
 body {
@@ -61,11 +74,19 @@ body {
 <head>
 </head>
 <body>
-<h3>New Recipe</h3>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Edit Recipe</a></li>
+		<li><a href="#tabs-2">hRecipe Results</a></li>
+	</ul>
+	<div id="tabs-1">
+
 <div><label for="Rec-Name">Name</label><input type="text" id="Rec-Name" name="Rec-Name"/></div>
-<div><label for="ingredient">Ingredient</label><input type="text" id="ingredient" name="ingredient"/></div>
-<div><label for="ingredient">Ingredient</label><input type="text" id="ingredient" name="ingredient"/></div>
-<div><label for="ingredient">Ingredient</label><input type="text" id="ingredient" name="ingredient"/></div>
+<div><label for="ingredient">Ingredients</label><a href="#" onClick="addFormField(); return false;"><span class="ui-state-default ui-corner-all" title=".ui-icon-plus"><span class="ui-icon ui-icon-plus"></span></span></a>
+<ul id='ingsList'>
+	<li><input type="text" id="ingredient" name="ingredient"/></li>
+</ul>
+</div>
 <div><label for="yield">Yield</label><input type="text" id="yield" name="yield"/></div>
 <div><label for="instructions">Instructions</label><textarea id="instructions" name="instructions" rows="4" cols="20"></textarea></div>
 <div><label for="duration">Duration</label><input type="text" id="duration" name="duration"/></div>
@@ -78,5 +99,9 @@ body {
 <div><label for="tag">Tags</label><input type="text" id="tag" name="tag"/></div>
 <div><label for="outputType">Output Results to:</label><br>    <input type="radio" name="outputType" id="outputType" value="field" checked> Current field on Page<input type="radio" name="outputType" id="outputType" value="display"> Display Here </div>
 <div><input type="button" id="ok" value="Microformat it!" onClick='postData();'>    <input type="button" id="done" value="Close" onClick='done();'></div>
+</div>
+<div id="tabs-2">
+	<div><label for="results">results</label><textarea id="results" name="results" rows="14" cols="60"></textarea></div>
+</div>
 </body>
 </html>
