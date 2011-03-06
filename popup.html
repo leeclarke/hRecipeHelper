@@ -14,6 +14,16 @@
 		$('#published').datepicker();
 		$('#ok').button();
 		$('#done').button();
+		$( "#tabs" ).tabs({
+	   show: function(event, ui) { 		
+		 }
+
+		});
+		$( "#tabs" ).bind( "tabsshow", function(event, ui) {
+			if(ui.panel.id == "tabs-2") {
+				console.log("Got Tab");
+			}
+		});
 	}
 	
 	
@@ -63,6 +73,7 @@
 	$(function() {
 		$( "#tabs" ).tabs();
 	});
+		
 </script>
 <style>
 body {
@@ -82,26 +93,27 @@ body {
 	<div id="tabs-1">
 
 <div><label for="Rec-Name">Name</label><input type="text" id="Rec-Name" name="Rec-Name"/></div>
+<div><label for="summery">Summery</label><input type="text" id="summery" name="summery"/></div>
 <div><label for="ingredient">Ingredients</label><a href="#" onClick="addFormField(); return false;"><span class="ui-state-default ui-corner-all" title=".ui-icon-plus"><span class="ui-icon ui-icon-plus"></span></span></a>
 <ul id='ingsList'>
 	<li><input type="text" id="ingredient" name="ingredient"/></li>
 </ul>
 </div>
 <div><label for="yield">Yield</label><input type="text" id="yield" name="yield"/></div>
-<div><label for="instructions">Instructions</label><textarea id="instructions" name="instructions" rows="4" cols="20"></textarea></div>
+<div><label for="instructions">Instructions</label><textarea id="instructions" name="instructions" rows="6" cols="40"></textarea></div>
 <div><label for="duration">Duration</label><input type="text" id="duration" name="duration"/></div>
 <div><label for="photo">Photo</label><input type="text" id="photo" name="photo"/></div>
-<div><label for="summery">Summery</label><input type="text" id="summery" name="summery"/></div>
-<div><label for="author">Author</label><input type="text" id="author" name="author"/></div>
-<div><label for="published">Published</label><input type="text" id="published" name="published"/></div>
+
+<div><label for="author">Author</label><input type="text" id="author" name="author"/>
+ <label for="published">Published</label><input type="text" id="published" name="published"/></div>
 <div><label for="nutrition">Nutrition</label><input type="text" id="nutrition" name="nutrition"/></div>
 <div><label for="nutrition">Nutrition</label><input type="text" id="nutrition" name="nutrition"/></div>
 <div><label for="tag">Tags</label><input type="text" id="tag" name="tag"/></div>
-<div><label for="outputType">Output Results to:</label><br>    <input type="radio" name="outputType" id="outputType" value="field" checked> Current field on Page<input type="radio" name="outputType" id="outputType" value="display"> Display Here </div>
+<div><label for="outputType">Output Results to:</label><br>    <input type="radio" name="outputType" id="outputType" value="field" checked> Current field on Page<input type="radio" name="outputType" id="outputType" value="display"> Display Here </div>	
 <div><input type="button" id="ok" value="Microformat it!" onClick='postData();'>    <input type="button" id="done" value="Close" onClick='done();'></div>
 </div>
 <div id="tabs-2">
-	<div><label for="results">results</label><textarea id="results" name="results" rows="14" cols="60"></textarea></div>
+	<div><label for="results">results</label><textarea id="results" name="results" rows="14" cols="40"></textarea></div>
 </div>
 </body>
 </html>
