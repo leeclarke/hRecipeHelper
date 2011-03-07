@@ -38,7 +38,8 @@
 		var hRecipeCode = convertTohRecipe(data);
 		debug("hrecipe=="+hRecipeCode);
 		
-		chrome.tabs.executeScript(null, {code:"updateText('"+hRecipeCode+"')"})		
+		return hRecipeCode;
+		//chrome.tabs.executeScript(null, {code:"updateText('"+hRecipeCode+"')"})		
 		debug("done");
 	}
 

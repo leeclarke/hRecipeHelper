@@ -5,7 +5,9 @@
 <script type="text/javascript" src="jquery.url.js"></script>
 <script type="text/javascript" src="formData.js"></script>
 <script>
-	
+//TODO:   Reorder fields
+//Add Copy clipboard
+//Do styling 	
 	/**
 	 * Loads existing hRecipe data into fields based on URL and presence of data.
 	 */
@@ -15,6 +17,8 @@
 		$('#published').datepicker();
 		$('#ok').button();
 		$('#done').button();
+		$('#close').button();
+		$('#copy').button();
 		$( "#tabs" ).tabs({
 	    show: function(event, ui) { 		
 		 }
@@ -22,6 +26,12 @@
 		$( "#tabs" ).bind( "tabsshow", function(event, ui) {
 			if(ui.panel.id == "tabs-2") {
 				console.log("Got Tab");
+				var formData = initData();
+				if(formData){
+					var output = chrome.extension.getBackgroundPage().processData(formData);
+					console.log("output="+output);
+					$('#results').val(output);
+				}
 			}
 		});
 	}
@@ -30,9 +40,9 @@
 	$(document).ready(loadBlogData);
 	
 	/**
-	 * collect data and send to background for posting.
+	 * collect data and create dto.
 	 */
-	function postData() {
+	function initData() {
 //TODO: Add form validation for name and ingredients : required and type checks for rest.	
 
 		var formData = new FormData();		
@@ -48,8 +58,7 @@
 		formData.$summery = $('#summery').val();
 		formData.$tags = $('#tag').val();
 		
-		chrome.extension.getBackgroundPage().processData(formData);
-		//window.close();
+		return formData		
 	}
 	
 	function done() {
@@ -111,10 +120,12 @@ body {
 <ul id='ingsList'>
 <div><label for="tag">Tags</label><input type="text" id="tag" name="tag"/></div>
 <div><label for="outputType">Output Results to:</label><br>    <input type="radio" name="outputType" id="outputType" value="field" checked> Current field on Page<input type="radio" name="outputType" id="outputType" value="display"> Display Here </div>	
-<div><input type="button" id="ok" value="Microformat it!" onClick='postData();'>    <input type="button" id="done" value="Close" onClick='done();'></div>
+<div><input type="button" id="done" value="Close" onClick='done();'></div>
 </div>
 <div id="tabs-2">
-	<div><label for="results">results</label><textarea id="results" name="results" rows="14" cols="40"></textarea></div>
+	<div><input type="button" id="copy" value="Copy to Clipboard" onClick='done();'><input type="button" id="close" value="Close" onClick='done();'></div>
+<div>&nbsp;</div>
+	<div><label for="results">results</label><textarea id="results" name="results" rows="20" cols="40"></textarea></div>
 </div>
 </body>
 </html>
