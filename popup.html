@@ -84,12 +84,7 @@
 	});
 		
 </script>
-<style>
-body {
-  min-width:357px;
-  overflow-x:hidden;
-}
-</style>
+
 <html>
 <head>
 </head>
@@ -99,33 +94,36 @@ body {
 		<li><a href="#tabs-1">Edit Recipe</a></li>
 		<li><a href="#tabs-2">hRecipe Results</a></li>
 	</ul>
+	<div align="right"><input type="button" id="done" value="Close" onClick='done();'></div>
 	<div id="tabs-1">
-
-<div><label for="Rec-Name">Name</label><input type="text" id="Rec-Name" name="Rec-Name"/></div>
-<div><label for="summery">Summery</label><input type="text" id="summery" name="summery"/></div>
-<div><label for="ingredient">Ingredients </label><a href="#" onClick="addFormField('ingredient'); return false;">add</a>
-<ul id='ingredientList'>
-	<li><input type="text" id="ingredient" name="ingredient"/></li>
-</ul>
-</div>
-<div><label for="yield">Yield</label><input type="text" id="yield" name="yield"/></div>
-<div><label for="instructions">Instructions</label><textarea id="instructions" name="instructions" rows="6" cols="40"></textarea></div>
-<div><label for="duration">Duration</label><input type="text" id="duration" name="duration"/></div>
-<div><label for="photo">Photo</label><input type="text" id="photo" name="photo"/></div>
-<div><label for="author">Author</label><input type="text" id="author" name="author"/></div>
-<div> <label for="published">Published</label><input type="text" id="published" name="published"/></div>
-<div><label for="nutrition">Nutrition </label><a href="#" onClick="addFormField('nutrition'); return false;" alt="Add another">add</a>
-<ul id='nutritionList'>
-	<li><input type="text" id="nutrition" name="nutrition"/></div></li>
-<ul id='ingsList'>
-<div><label for="tag">Tags</label><input type="text" id="tag" name="tag"/></div>
-<div><label for="outputType">Output Results to:</label><br>    <input type="radio" name="outputType" id="outputType" value="field" checked> Current field on Page<input type="radio" name="outputType" id="outputType" value="display"> Display Here </div>	
-<div><input type="button" id="done" value="Close" onClick='done();'></div>
-</div>
-<div id="tabs-2">
-	<div><input type="button" id="copy" value="Copy to Clipboard" onClick='done();'><input type="button" id="close" value="Close" onClick='done();'></div>
-<div>&nbsp;</div>
-	<div><label for="results">results</label><textarea id="results" name="results" rows="20" cols="40"></textarea></div>
-</div>
+		<table>
+			<tr><th><label for="Rec-Name">Name</label></th><td><input type="text" id="Rec-Name" name="Rec-Name"/></td></tr>
+			<tr><th><label for="summery">Summery</label></th><td><input type="text" id="summery" name="summery"/></div></td></tr>
+			<tr><th><label for="author">Author</label></th><td><input type="text" id="author" name="author"/></div></td></tr>
+			<tr><th><label for="published">Published</label></th><td><input type="text" id="published" name="published"/></td></tr>
+			<tr><th><label for="yield">Yield</label></th><td><input type="text" id="yield" name="yield"/></td></tr>
+			<tr><th><label for="ingredient">Ingredients </label></th><td><a href="#" onClick="addFormField('ingredient'); return false;">add</a></td><tr>
+			<tr><td colspan=2>
+			<ul id='ingredientList'>
+				<li><input type="text" id="ingredient" name="ingredient"/></li>
+			</ul>
+			</td></tr>
+			<tr><th colspan=2><label for="instructions">Instructions</label></th>
+			<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="40"></textarea></td></tr>
+			<tr><th><label for="duration">Duration</label></th><td><input type="text" id="duration" name="duration"/></td></tr>
+			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"/></td></tr>
+			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="addFormField('nutrition'); return false;" alt="Add another">add</a></td></tr>
+			<tr><td colspan=2>		
+			<ul id='nutritionList'>
+				<li><input type="text" id="nutrition" name="nutrition"/></li>
+			<ul id='ingsList'>
+			</td></tr>
+			<tr><th><label for="tag">Tags</label></th><td><input type="text" id="tag" name="tag"/></td></tr>
+		</table>
+	</div>
+	<div id="tabs-2">
+		<div><label for="results">Results</label><textarea id="results" name="results" rows="20" cols="40"></textarea></div>
+		<div><input type="button" id="copy" value="Copy to Clipboard" onClick='done();'></div>
+	</div>
 </body>
 </html>

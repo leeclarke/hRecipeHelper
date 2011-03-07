@@ -1,0 +1,14 @@
+body {
+  min-width:400px;
+  min-height: 700px;
+  overflow-x:hidden;
+}
+
+#rec-name {
+	width: 300px;
+}
+
+th {
+	font-weight: bold;
+	float:left
+}
