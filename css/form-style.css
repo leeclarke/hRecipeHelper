@@ -4,7 +4,7 @@ body {
   overflow-x:hidden;
 }
 
-#rec-name {
+.large-field {
 	width: 300px;
 }
 

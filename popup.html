@@ -5,9 +5,8 @@
 <script type="text/javascript" src="jquery.url.js"></script>
 <script type="text/javascript" src="formData.js"></script>
 <script>
-//TODO:   Reorder fields
 //Add Copy clipboard
-//Do styling 	
+
 	/**
 	 * Loads existing hRecipe data into fields based on URL and presence of data.
 	 */
@@ -97,11 +96,11 @@
 	<div align="right"><input type="button" id="done" value="Close" onClick='done();'></div>
 	<div id="tabs-1">
 		<table>
-			<tr><th><label for="Rec-Name">Name</label></th><td><input type="text" id="Rec-Name" name="Rec-Name"/></td></tr>
-			<tr><th><label for="summery">Summery</label></th><td><input type="text" id="summery" name="summery"/></div></td></tr>
-			<tr><th><label for="author">Author</label></th><td><input type="text" id="author" name="author"/></div></td></tr>
+			<tr><th><label for="Rec-Name">Name</label></th><td><input type="text" id="Rec-Name" name="Rec-Name" class="large-field"/></td></tr>
+			<tr><th><label for="author">Author</label></th><td><input type="text" id="author" name="author"  class="large-field"/></div></td></tr>
 			<tr><th><label for="published">Published</label></th><td><input type="text" id="published" name="published"/></td></tr>
 			<tr><th><label for="yield">Yield</label></th><td><input type="text" id="yield" name="yield"/></td></tr>
+			<tr><th><label for="summery">Summery</label></th><td><textarea id="summery" name="summery" rows="3" cols="30"></textarea></td></tr>
 			<tr><th><label for="ingredient">Ingredients </label></th><td><a href="#" onClick="addFormField('ingredient'); return false;">add</a></td><tr>
 			<tr><td colspan=2>
 			<ul id='ingredientList'>
@@ -109,16 +108,16 @@
 			</ul>
 			</td></tr>
 			<tr><th colspan=2><label for="instructions">Instructions</label></th>
-			<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="40"></textarea></td></tr>
-			<tr><th><label for="duration">Duration</label></th><td><input type="text" id="duration" name="duration"/></td></tr>
-			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"/></td></tr>
+			<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="43"></textarea></td></tr>
+			<tr><th><label for="duration">Duration</label></th><td><input type="text" id="duration" name="duration" class="large-field"/></td></tr>
+			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"  class="large-field"/></td></tr>
 			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="addFormField('nutrition'); return false;" alt="Add another">add</a></td></tr>
 			<tr><td colspan=2>		
 			<ul id='nutritionList'>
 				<li><input type="text" id="nutrition" name="nutrition"/></li>
 			<ul id='ingsList'>
 			</td></tr>
-			<tr><th><label for="tag">Tags</label></th><td><input type="text" id="tag" name="tag"/></td></tr>
+			<tr><th><label for="tag">Tags</label></th><td><input type="text" id="tag" name="tag" class="large-field"/></td></tr>
 		</table>
 	</div>
 	<div id="tabs-2">

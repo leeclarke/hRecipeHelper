@@ -9,7 +9,7 @@
 	google.load("gdata", "1.1");
 	google.setOnLoadCallback(runAfterLibLoad);
 	
-
+///TODO: Fix problems getting data from authors.
 	/**
 	 * Call back which can run after the api has been loaded from blogger. Retrieves data
 	 * if doing update and pass on to popup.
@@ -99,7 +99,7 @@
 			microformat +="<h2>Ingredients</h2>"
 			microformat +="<ul>"
 			for(i in data.$ingredients) {
-				microformat += ("<li class=\"ingredient\">" + i.value + "</li>");
+				microformat += ("<li class=\"ingredient\">" + data.$ingredients[i] + "</li>");
 			}
 			microformat +="</ul>"
 			
@@ -115,7 +115,7 @@
 				microformat +="<h2>Nutrition</h2>";
 				microformat +="<p>";
 				for(n in data.$nutritions) {
-					microformat += ("<span class=\"nutrition\">" + n.value + "</span>");
+					microformat += ("<span class=\"nutrition\">" + data.$nutritions[n] + "</span>");
 				}
 				microformat +="</p>";
 			}    
