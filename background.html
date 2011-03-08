@@ -1,25 +1,10 @@
 <html>
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery.url.js"></script>
 <script type="text/javascript" src="js/formData.js"></script>
-<head>
-	<script>
-	//blogger api needs to be retrieved in a head block.
-	google.load("gdata", "1.1");
-	google.setOnLoadCallback(runAfterLibLoad);
-	
-///TODO: Fix problems getting data from authors.
-	/**
-	 * Call back which can run after the api has been loaded from blogger. Retrieves data
-	 * if doing update and pass on to popup.
-	 */
-	function runAfterLibLoad(){
-				
-	}
-	</script>
-</head>
-  <script>
+
+<script>
 	var BLOGGER = "www.blogger.com";
 	var BLOGGER_POST = "/post-edit.g";
 	var BLOGGER_CREATE = "/post-create.g";
@@ -86,38 +71,38 @@
 	 * Converts data to the hRecipe format with default formatting tags.
 	 */
 	function convertTohRecipe(data) {
-		var microformat = "<div class=\"hrecipe\">";
+		var microformat = "<div class=\"hrecipe\">\n";
 		if(data){
 			
-			microformat += ("<h1 class=\"fn\">" + data.$recname + "</h1>");
-			if(data.$summary) microformat += ("<p class=\"summary\">" + data.$summary + "</p>");
-			if(data.$authors.length>0) microformat += ("<p class=\"authors\">" + data.$authors[0].value + "</p>");
-			if(data.$published) microformat += ("<p>Published <span class=\"published\">" + data.$published + "</span></p>");
+			microformat += ("<h1 class=\"fn\">" + data.$recname + "</h1>\n");
+			if(data.$summary) microformat += ("<p class=\"summary\">" + data.$summary + "</p>\n");
+			if(data.$author) microformat += ("<p class=\"author\">" + data.$author + "</p>\n");
+			if(data.$published) microformat += ("<p>Published <span class=\"published\">" + data.$published + "</span></p>\n");
 			if(data.$photos.length>0) {
-				microformat += ("<img src=\"" + data.$photos[0] + "\" class=\"photo\" width=\"100\" height=\"100\" alt=\"Pommes Frites\"/>");
+				microformat += ("<img src=\"" + data.$photos[0] + "\" class=\"photo\" style=\"height:140px;width:140px;border-width:0px;\" alt=\"" + data.$recname + "/>\n");
 			}
-			microformat +="<h2>Ingredients</h2>"
-			microformat +="<ul>"
+			microformat +="<h2>Ingredients</h2>\n"
+			microformat +="<ul>\n"
 			for(i in data.$ingredients) {
-				microformat += ("<li class=\"ingredient\">" + data.$ingredients[i] + "</li>");
+				microformat += ("<li class=\"ingredient\">" + data.$ingredients[i] + "</li>\n");
 			}
-			microformat +="</ul>"
+			microformat +="</ul>\n"
 			
 			if(data.$instructions) {
-				microformat +="<h2>Instructions</h2>"
-				microformat += ("<span class=\"instructions\">" + data.$instructions + "</span>");
+				microformat +="<h2>Instructions</h2>\n"
+				microformat += ("<span class=\"instructions\">" + data.$instructions + "</span>\n");
 			}
 			
-			if(data.$yield) microformat += ("<p>Yield:<span class=\"yield\">"+data.$yield+"</span></p>");
-			if(data.$durations.length>0) microformat += ("<p>Preparation time is approximately <span class=\"duration\">" + data.$duration[0] + "</span></p>")
+			if(data.$yield) microformat += ("<p>Yield:<span class=\"yield\">"+data.$yield+"</span></p>\n");
+			if(data.$durations.length>0) microformat += ("<p>Preparation time is approximately <span class=\"duration\">" + data.$durations[0] + "</span></p>\n")
 			
 			if(data.$nutritions.length>0) {
-				microformat +="<h2>Nutrition</h2>";
-				microformat +="<p>";
+				microformat +="<h2>Nutrition</h2>\n";
+				microformat +="<p>\n";
 				for(n in data.$nutritions) {
-					microformat += ("<span class=\"nutrition\">" + data.$nutritions[n] + "</span>");
+					microformat += ("<span class=\"nutrition\">" + data.$nutritions[n] + "</span>\n");
 				}
-				microformat +="</p>";
+				microformat +="</p>\n";
 			}    
 		}
 		

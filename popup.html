@@ -5,7 +5,17 @@
 <script type="text/javascript" src="js/jquery.url.js"></script>
 <script type="text/javascript" src="js/formData.js"></script>
 <script>
-//Add Copy clipboard
+//TODO: Add validations
+//TODO: Add save data to localstorage in case of accidentally closing.
+//TODO: Add clear button to reset form if data was left in local storage.
+//TODO: add durration types (preptime, cooktime, also compute total 'duration' )
+//TODO: Add proper value-title tags for the duration times so google will parse it. ex: <span class="value-title" title="PT1H30M"></span> (PT1H30M ? does the PT stand for Pacific time or something else?)
+//TODO: Add Nutrition type drop down to specify Calories, fat, Total Carbs, Dietary Fiber, protein, sodium, Cholesterol
+//TODO: Add hRecipe format for nutrition types. Look into diff on value/type tags
+//TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
+//TODO: Consider adding a non-formatting option that uses all span tags so sues can style their own.
+//DONE: Fix Author output
+//DONE: fix Duration Output.
 
 	/**
 	 * Loads existing hRecipe data into fields based on URL and presence of data.
@@ -47,9 +57,9 @@
 		formData.$recname = $('#Rec-Name').val();		
 		formData.$ingredients = getFormArray('ingredient');
 		formData.$yield = $('#yield').val();
-		formData.$duration = getFormArray('duration');
+		formData.$durations = getFormArray('duration');
 		formData.$photo = getFormArray('#photo');
-		formData.$author = getFormArray('#author');
+		formData.$author = $('#author').val();
 		formData.$published = $('#published').val();
 		formData.$instructions = $('#instructions').val();
 		formData.$nutritions = getFormArray('nutrition');
