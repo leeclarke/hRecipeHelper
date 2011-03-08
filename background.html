@@ -94,7 +94,31 @@
 			}
 			
 			if(data.$yield) microformat += ("<p>Yield:<span class=\"yield\">"+data.$yield+"</span></p>\n");
-			if(data.$durations.length>0) microformat += ("<p>Preparation time is approximately <span class=\"duration\">" + data.$durations[0] + "</span></p>\n")
+			//if(data.$durations.length>0) microformat += ("<p>Preparation time is approximately <span class=\"duration\">" + data.$durations[0] + "</span></p>\n")
+			
+			if(data.$preptime || data.$cooktime) {
+				microformat += "<span class=\"duration\">\n";
+				var prep = "0M";
+				var cook = "0M";
+				
+				
+				if(data.$preptime) {
+					prep = parseTime(data.$preptime);
+					microformat += ("<p>Prep Time:<span class=\"preptime\"><span class=\"value-title\" title=\""+prep+"\"></span>"+data.$preptime+"</span></p>\n");
+					
+				}
+				if(data.$cooktime) {
+					cook = parseTime(data.$cooktime);
+					microformat += ("<p>Cook time:<span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span>"+data.$cooktime+"</span></p>\n");				
+				}
+				
+				//TODO: Add Total				
+				
+				
+				microformat += "</span>\n";
+			}
+			
+			
 			
 			if(data.$nutritions.length>0) {
 				microformat +="<h2>Nutrition</h2>\n";
@@ -110,6 +134,9 @@
 		return microformat;
 	}
 
-
+	function parseTime(timeValue) {
+		//TODO: Finish this assumes only mins atm
+		return "PT"+timeValue+"M"
+	}
   </script>
 </html>

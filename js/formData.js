@@ -6,7 +6,9 @@ function FormData() {
 	this.$ingredients = [];
 	this.$yield = 0;
 	this.$instructions = "";
-	this.$durations = [];
+	this.$duration =  0;
+	this.$cooktime = 0;
+	this.$preptime = 0;
 	this.$photos  = [];
 	this.$summery = "";
 	this.$authors = [];

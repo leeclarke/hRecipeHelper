@@ -5,15 +5,18 @@
 <script type="text/javascript" src="js/jquery.url.js"></script>
 <script type="text/javascript" src="js/formData.js"></script>
 <script>
-//TODO: Add validations
-//TODO: Add save data to localstorage in case of accidentally closing.
-//TODO: Add clear button to reset form if data was left in local storage.
-//TODO: add durration types (preptime, cooktime, also compute total 'duration' )
+
+//TODO: finish time formatter in background for duration types
 //TODO: Add proper value-title tags for the duration times so google will parse it. ex: <span class="value-title" title="PT1H30M"></span> (PT1H30M ? does the PT stand for Pacific time or something else?)
 //TODO: Add Nutrition type drop down to specify Calories, fat, Total Carbs, Dietary Fiber, protein, sodium, Cholesterol
+//TODO: Add validations (durations- require hh:mm format)
+//TODO: Add save data to localstorage in case of accidentally closing.
+//TODO: Add clear button to reset form if data was left in local storage.
 //TODO: Add hRecipe format for nutrition types. Look into diff on value/type tags
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
 //TODO: Consider adding a non-formatting option that uses all span tags so sues can style their own.
+
+//DONE: add duration types (preptime, cooktime, also compute total 'duration' )
 //DONE: Fix Author output
 //DONE: fix Duration Output.
 
@@ -57,7 +60,9 @@
 		formData.$recname = $('#Rec-Name').val();		
 		formData.$ingredients = getFormArray('ingredient');
 		formData.$yield = $('#yield').val();
-		formData.$durations = getFormArray('duration');
+		//formData.$durations = getFormArray('duration');
+		formData.$cooktime = $('#cook-time').val();
+		formData.$preptime = $('#prep-time').val();
 		formData.$photo = getFormArray('#photo');
 		formData.$author = $('#author').val();
 		formData.$published = $('#published').val();
@@ -118,7 +123,8 @@
 			</td></tr>
 			<tr><th colspan=2><label for="instructions">Instructions</label></th>
 			<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="43"></textarea></td></tr>
-			<tr><th><label for="duration">Duration</label></th><td><input type="text" id="duration" name="duration" class="large-field"/></td></tr>
+			<tr><th><label for="prep-time">Prep Time</label></th><td><input type="text" id="prep-time" name="prep-time" class="large-field"/></td></tr>
+			<tr><th><label for="cook-time">Cook Time</label></th><td><input type="text" id="cook-time" name="cook-time" class="large-field"/></td></tr>
 			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"  class="large-field"/></td></tr>
 			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="addFormField('nutrition'); return false;" alt="Add another">add</a></td></tr>
 			<tr><td colspan=2>		
