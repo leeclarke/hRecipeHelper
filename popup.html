@@ -3,6 +3,7 @@
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.url.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/formData.js"></script>
 <script>
 
@@ -39,12 +40,24 @@
 			if(ui.panel.id == "tabs-2") {
 				console.log("Got Tab");
 				var formData = initData();
-				if(formData){
+				if($("#recipeForm").valid() && formData){
 					var output = chrome.extension.getBackgroundPage().processData(formData);
 					console.log("output="+output);
 					$('#results').val(output);
+				} else {
+					ui.panel.id == "tabs-1"
+					//TODO: Set back to tabs-1
 				}
 			}
+		});
+    	$("#recipeForm").validate({
+		   rules: {
+			 // simple rule, converted to {required:true}
+			 recName: {
+			 	required: true,
+			 	minlength: 2
+			 }
+		   }
 		});
 	}
 	
@@ -56,11 +69,12 @@
 	function initData() {
 //TODO: Add form validation for name and ingredients : required and type checks for rest.	
 
+		console.log("is valid=="+	$("#recipeForm").valid());
+
 		var formData = new FormData();		
-		formData.$recname = $('#Rec-Name').val();		
+		formData.$recname = $('#recName').val();		
 		formData.$ingredients = getFormArray('ingredient');
 		formData.$yield = $('#yield').val();
-		//formData.$durations = getFormArray('duration');
 		formData.$cooktime = $('#cook-time').val();
 		formData.$preptime = $('#prep-time').val();
 		formData.$photo = getFormArray('#photo');
@@ -102,6 +116,7 @@
 <head>
 </head>
 <body>
+ <form class="cmxform" id="recipeForm" method="get" action="">
 <div id="tabs">
 	<ul>
 		<li><a href="#tabs-1">Edit Recipe</a></li>
@@ -110,7 +125,7 @@
 	<div align="right"><input type="button" id="done" value="Close" onClick='done();'></div>
 	<div id="tabs-1">
 		<table>
-			<tr><th><label for="Rec-Name">Name</label></th><td><input type="text" id="Rec-Name" name="Rec-Name" class="large-field"/></td></tr>
+			<tr><th><label for="recName">Name</label></th><td><input type="text" id="recName" name="recName" class="large-field"/></td></tr>
 			<tr><th><label for="author">Author</label></th><td><input type="text" id="author" name="author"  class="large-field"/></div></td></tr>
 			<tr><th><label for="published">Published</label></th><td><input type="text" id="published" name="published"/></td></tr>
 			<tr><th><label for="yield">Yield</label></th><td><input type="text" id="yield" name="yield"/></td></tr>
@@ -118,7 +133,7 @@
 			<tr><th><label for="ingredient">Ingredients </label></th><td><a href="#" onClick="addFormField('ingredient'); return false;">add</a></td><tr>
 			<tr><td colspan=2>
 			<ul id='ingredientList'>
-				<li><input type="text" id="ingredient" name="ingredient"/></li>
+				<li><input type="text" id="ingredient required" name="ingredient"/></li>
 			</ul>
 			</td></tr>
 			<tr><th colspan=2><label for="instructions">Instructions</label></th>
@@ -134,6 +149,7 @@
 			</td></tr>
 			<tr><th><label for="tag">Tags</label></th><td><input type="text" id="tag" name="tag" class="large-field"/></td></tr>
 		</table>
+</form>
 	</div>
 	<div id="tabs-2">
 		<div><label for="results">Results</label><textarea id="results" name="results" rows="20" cols="40"></textarea></div>
