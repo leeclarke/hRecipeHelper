@@ -103,8 +103,10 @@
 		console.log("is valid=="+	$("#recipeForm").valid());
 
 		var formData = new FormData();		
-		formData.$recname = $('#recName').val();		
-		formData.$ingredients = getFormArray('ingredient');
+		formData.$recname = $('#recName').val();	
+		var inglist = getFormArray('ingredient');
+		inglist.unshift($('#ingredient0').val());
+		formData.$ingredients = inglist;
 		formData.$yield = $('#yield').val();
 		formData.$cooktime = $('#cooktime').val();
 		formData.$preptime = $('#preptime').val();
