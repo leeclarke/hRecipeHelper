@@ -11,7 +11,7 @@
 
 	
 	/**
-	 * //Cant use Chrome with the Blogger api with out getting an ugly popup... so odd come on google really?
+	 * //Cant use Chrome with the Blogger api with out getting an ugly popup... so odd, come on google really?
 	 * Moving output to the popup to display for copy/paste
 	 */
 	function processData(data) {
@@ -28,7 +28,7 @@
 		debug("done");
 	}
 
-//TODO:clean up junk below.	
+//TODO:clean up method below.	
 	/**
 	 * Looks at the URL to determine what should be done given the action type of 'load' or 'post',
 	 * based on the site in current browser tab. 
@@ -41,7 +41,7 @@
 		chrome.tabs.getSelected(null, function(tab) {    
 		var url = tab.url;						
 		jQuery.url.setUrl(url)
-		console.log("HOST="+jQuery.url.attr("host"));
+		debug("HOST="+jQuery.url.attr("host"));
 
 		//TODO: get selected text field and post code to there, if none selected then err
 			if("load" == actionType) {
@@ -49,9 +49,9 @@
 
 			}
 			else if("post" == actionType) {
-				console.log('NO BLOGGER POST');
+				debug('NO BLOGGER POST');
 				var hRecipeCode = convertTohRecipe(data);
-				console.log("hrecipe=="+hRecipeCode);
+				debug("hrecipe=="+hRecipeCode);
 				//var currField == document.activeElement;
 				chrome.tabs.executeScript(null, {code:"updateText('TESTER')"})
 				chrome.tabs.executeScript(null, {code:"console.log('active=='+document.activeElement)"})
@@ -94,7 +94,6 @@
 			}
 			
 			if(data.$yield) microformat += ("<p>Yield:<span class=\"yield\">"+data.$yield+"</span></p>\n");
-			//if(data.$durations.length>0) microformat += ("<p>Preparation time is approximately <span class=\"duration\">" + data.$durations[0] + "</span></p>\n")
 			
 			if(data.$preptime || data.$cooktime) {
 				microformat += "<span class=\"duration\">\n";
@@ -111,9 +110,6 @@
 					cook = parseTime(data.$cooktime);
 					microformat += ("<p>Cook time:<span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span>"+data.$cooktime+"</span></p>\n");				
 				}
-				
-				//TODO: Add Total				
-				
 				
 				microformat += "</span>\n";
 			}
@@ -134,9 +130,19 @@
 		return microformat;
 	}
 
+	/**
+	 * Parse method expects to recieve time formatted in the hh:mm format and simply yanks out the : and adds markers
+	 */
 	function parseTime(timeValue) {
-		//TODO: Finish this assumes only mins atm
-		return "PT"+timeValue+"M"
+		var result = "PT";
+		var timeSplit = timeValue.split(":");
+		if(timeSplit.length == 2) {
+			result += (timeSplit[0]+"H"+timeSplit[1]+"M");
+		} else {
+			result += (timeValue+"M");
+		}		
+		
+		return result;
 	}
   </script>
 </html>
