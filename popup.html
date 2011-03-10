@@ -50,17 +50,41 @@
 				}
 			}
 		});
+
+//TODO: Why doesnt this do anything?		
+		jQuery.validator.addMethod("cooktime", function( value, element ) {
+console.log('cooktime val');
+			return this.optional(element) || value.length >= 6  ;
+		}, "Cook and prep times should be enteres in the hh:mm format.");
+
+		
+//TODO add extra tag for ingr 1 not working
     	$("#recipeForm").validate({
-		   rules: {
+			rules: {
 			 // simple rule, converted to {required:true}
+				recName: {
+				 	required: true,
+				 	minlength: 2
+				 },
+				ingredient0: {
+					required: true,
+				 	minlength: 2
+				}
+		   },
+		   messages: {
 			 recName: {
-			 	required: true,
-			 	minlength: 2
+			   required: "A recipe Title is required.",
+			   minlength: jQuery.format("At least {0} characters required!")
+			 },
+			 ingredient0: {
+			   required: "Requires 1 ingrediant.",
+			   minlength: jQuery.format("At least {0} characters required!")
 			 }
 		   }
 		});
 	}
 	
+
 	$(document).ready(loadBlogData);
 	
 	/**
@@ -75,8 +99,8 @@
 		formData.$recname = $('#recName').val();		
 		formData.$ingredients = getFormArray('ingredient');
 		formData.$yield = $('#yield').val();
-		formData.$cooktime = $('#cook-time').val();
-		formData.$preptime = $('#prep-time').val();
+		formData.$cooktime = $('#cooktime').val();
+		formData.$preptime = $('#preptime').val();
 		formData.$photo = getFormArray('#photo');
 		formData.$author = $('#author').val();
 		formData.$published = $('#published').val();
@@ -86,10 +110,6 @@
 		formData.$tags = $('#tag').val();
 		
 		return formData		
-	}
-	
-	function done() {
-		window.close();
 	}
 	
 	/**
@@ -122,10 +142,10 @@
 		<li><a href="#tabs-1">Edit Recipe</a></li>
 		<li><a href="#tabs-2">hRecipe Results</a></li>
 	</ul>
-	<div align="right"><input type="button" id="done" value="Close" onClick='done();'></div>
+	<div align="right"><input type="button" id="done" value="Close" onClick='window.close();'></div>
 	<div id="tabs-1">
 		<table>
-			<tr><th><label for="recName">Name</label></th><td><input type="text" id="recName" name="recName" class="large-field"/></td></tr>
+			<tr><th><label for="recName">Title</label></th><td><input type="text" id="recName" name="recName" class="large-field"/></td></tr>
 			<tr><th><label for="author">Author</label></th><td><input type="text" id="author" name="author"  class="large-field"/></div></td></tr>
 			<tr><th><label for="published">Published</label></th><td><input type="text" id="published" name="published"/></td></tr>
 			<tr><th><label for="yield">Yield</label></th><td><input type="text" id="yield" name="yield"/></td></tr>
@@ -133,13 +153,13 @@
 			<tr><th><label for="ingredient">Ingredients </label></th><td><a href="#" onClick="addFormField('ingredient'); return false;">add</a></td><tr>
 			<tr><td colspan=2>
 			<ul id='ingredientList'>
-				<li><input type="text" id="ingredient required" name="ingredient"/></li>
+				<li><input type="text" id="ingredient0" name="ingredient"/></li>
 			</ul>
 			</td></tr>
 			<tr><th colspan=2><label for="instructions">Instructions</label></th>
 			<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="43"></textarea></td></tr>
-			<tr><th><label for="prep-time">Prep Time</label></th><td><input type="text" id="prep-time" name="prep-time" class="large-field"/></td></tr>
-			<tr><th><label for="cook-time">Cook Time</label></th><td><input type="text" id="cook-time" name="cook-time" class="large-field"/></td></tr>
+			<tr><th><label for="preptime">Prep Time</label></th><td><input type="text" id="preptime" name="preptime" class="large-field"/></td></tr>
+			<tr><th><label for="cooktime">Cook Time</label></th><td><input type="text" id="cooktime" name="cooktime" class="large-field"/></td></tr>
 			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"  class="large-field"/></td></tr>
 			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="addFormField('nutrition'); return false;" alt="Add another">add</a></td></tr>
 			<tr><td colspan=2>		
