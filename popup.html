@@ -97,7 +97,7 @@
 			return ((value.length >= 1 )? /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/.test(value):true)
 		}, "Times should be in the hh:mm format.");
 		
-		appendNutritionType("nutritionType");
+		appendNutritionTypes("nutritionType");
 	}
 	
 
@@ -130,33 +130,28 @@
 	}
 	
 	/**
-	 * retrieve array fo same name input fields.
+	 * Retrieve array of data values for same name input fields.
 	 */
 	function getFormArray(id) {
 		return $("input[id='"+id+"']").map(function(){return $(this).val();}).get();
 	}
 
 	/**
-     *
+     * Adds new nutrition input fields
      */
 	function appendNutrition() {
-		var elmtNumber = addFormField('nutrition');
-		var newElmName = (fieldName + "Row"+rowCt);
-
-		appendNutritionType('nutritionType'+elmtNumber);
-//TODO: Add select here from the newElmName ref.
-
+		var elmtNumber = addFormField('nutrition', true);		
+		appendNutritionTypes('nutritionType'+elmtNumber);
 	}
 
 	/**
- 	 *
+ 	 * Adds the array of Types to the new select
 	 */
-	function appendNutritionType(nutritionFieldName) {
+	function appendNutritionTypes(nutritionFieldName) {
 		var output = [];
 
-		$.each(nutritionTypes, function(key, value)
-		{
-		  output.push('<option value="'+ key +'">'+ value +'</option>');
+		$.each(nutritionTypes, function(key, value) 	{
+		  	output.push('<option value="'+ key +'">'+ value +'</option>');
 		});
 
 		$("."+nutritionFieldName).html(output.join(''));
@@ -166,13 +161,18 @@
 	 * Adds array type field to form.
 	 * @return - element name where added
 	 */
-	function addFormField(fieldName) {
+	function addFormField(fieldName, addSelect) {
 		var rowCt = $("#"+fieldName + "List li").size();
 		debug(rowCt);
 		var newElmName = (fieldName + "Row"+rowCt);
-
-		$("#"+fieldName + "List").append("<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+
-			fieldName+"\"/> <select id=\"nutritionType\" class=\"nutritionType"+ rowCt + "\"></select></li>");
+		var newHtml = "<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\"/>"
+		if(addSelect)
+			newHtml += "<select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
+		newHtml += "</li>";
+		$("#"+fieldName + "List").append(newHtml);
+		
+		//$("#"+fieldName + "List").append("<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+
+		//	fieldName+"\"/> <select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select></li>");
 		$("#"+fieldName + "Row"+rowCt).effect("highlight", {}, 3000);		
 		return rowCt;
 	}
