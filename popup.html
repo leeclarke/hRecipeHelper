@@ -9,12 +9,16 @@
 
 //TODO: Add save data to localstorage in case of accidentally closing.
 //TODO: Add clear button to reset form if data was left in local storage.
-//TODO: Add hRecipe format for nutrition types. Look into diff on value/type tags
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
 //TODO: Consider adding a non-formatting option that uses all span tags so users can style their own.
 //TODO: reverse parse to populate from current page/field for editing.
 //TODO: Find some graphics!
+//TODO: Add About Tab
+//TODO: move scripts to js file once done testing
 
+//DONE: make Ingredients field long.
+//DONE: Add hRecipe format for nutrition types. Look into diff on value/type tags
+//DONE: test duration validation, it should NOT allow "40 min" as an entry.
 //DONE: get NutritionType data from form and putput in right format
 //DONE: fix addField so Select is in the nutrition specific function.
 //DONE: Add Nutrition type drop down to specify Calories, fat, Total Carbs, Dietary Fiber, protein, sodium, Cholesterol
@@ -92,7 +96,7 @@
 		
 		//Add a time check function.		
 		$.validator.addMethod('checkTime', function( value, element, params ) {
-			if(/^([0-9]?[0-9])/.test(value))
+			if(/^([0-9]?[0-9])$/.test(value))
 				return true; //if just 1-2 digits then its ok assuem mins.
 			return ((value.length >= 1 )? /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/.test(value):true)
 		}, "Times should be in the hh:mm format.");
@@ -119,7 +123,7 @@
 		formData.$yield = $('#yield').val();
 		formData.$cooktime = $('#cooktime').val();
 		formData.$preptime = $('#preptime').val();
-		formData.$photo = getFormArray('#photo');
+		formData.$photos = [$('#photo').val()];
 		formData.$author = $('#author').val();
 		formData.$published = $('#published').val();
 		formData.$instructions = $('#instructions').val();
@@ -169,9 +173,12 @@
 		debug(rowCt);
 		var newElmName = (fieldName + "Row"+rowCt);
 		
-		var newHtml = "<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\"/>"
-		if(addSelect)
-			newHtml += "<select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
+		var newHtml = "<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\" "
+		if(addSelect) {
+			newHtml += "/> <select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
+		} else {
+			newHtml += " class=\"large-field\"/>";
+		}
 		newHtml += "</li>";
 		
 		$("#"+fieldName + "List").append(newHtml);
@@ -207,7 +214,7 @@
 			<tr><th><label for="ingredient">Ingredients </label></th><td><a href="#" onClick="addFormField('ingredient'); return false;">add</a></td><tr>
 			<tr><td colspan=2>
 			<ul id='ingredientList'>
-				<li><input type="text" id="ingredient0" name="ingredient0"/></li>
+				<li><input type="text" id="ingredient0" name="ingredient0" class="large-field"/></li>
 			</ul>
 			</td></tr>
 			<tr><th colspan=2><label for="instructions">Instructions</label></th>
