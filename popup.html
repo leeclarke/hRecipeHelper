@@ -7,7 +7,8 @@
 <script type="text/javascript" src="js/formData.js"></script>
 <script>
 
-//TODO: Add Nutrition type drop down to specify Calories, fat, Total Carbs, Dietary Fiber, protein, sodium, Cholesterol
+//TODO: fix addField so Select is in the nutrition specific function.
+//TODO: get NutritionType data from form
 //TODO: Add save data to localstorage in case of accidentally closing.
 //TODO: Add clear button to reset form if data was left in local storage.
 //TODO: Add hRecipe format for nutrition types. Look into diff on value/type tags
@@ -16,12 +17,15 @@
 //TODO: reverse parse to populate from current page/field for editing.
 //TODO: Find some graphics!
 
+//DONE: Add Nutrition type drop down to specify Calories, fat, Total Carbs, Dietary Fiber, protein, sodium, Cholesterol
 //DONE: Add proper value-title tags for the duration times so google will parse it. ex: <span class="value-title" title="PT1H30M"></span> (PT1H30M ? does the PT stand for Pacific time or something else?)
 //DONE: finish time formatter in background for duration types
 //DONE: Add validations (durations- require hh:mm format)
 //DONE: add duration types (preptime, cooktime, also compute total 'duration' )
 //DONE: Fix Author output
 //DONE: fix Duration Output.
+
+	var nutritionTypes = ["Calories", "Fat", "Total Carbs", "Dietary Fiber", "Protein", "Sodium", "Cholesterol"];
 
 	/**
 	 * Loads existing hRecipe data into fields based on URL and presence of data.
@@ -93,6 +97,7 @@
 			return ((value.length >= 1 )? /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/.test(value):true)
 		}, "Times should be in the hh:mm format.");
 		
+		appendNutritionType("nutritionType");
 	}
 	
 
@@ -130,17 +135,52 @@
 	function getFormArray(id) {
 		return $("input[id='"+id+"']").map(function(){return $(this).val();}).get();
 	}
+
+	/**
+     *
+     */
+	function appendNutrition() {
+		var elmtNumber = addFormField('nutrition');
+		var newElmName = (fieldName + "Row"+rowCt);
+
+		appendNutritionType('nutritionType'+elmtNumber);
+//TODO: Add select here from the newElmName ref.
+
+	}
+
+	/**
+ 	 *
+	 */
+	function appendNutritionType(nutritionFieldName) {
+		var output = [];
+
+		$.each(nutritionTypes, function(key, value)
+		{
+		  output.push('<option value="'+ key +'">'+ value +'</option>');
+		});
+
+		$("."+nutritionFieldName).html(output.join(''));
+	}
 	
+	/**
+	 * Adds array type field to form.
+	 * @return - element name where added
+	 */
 	function addFormField(fieldName) {
 		var rowCt = $("#"+fieldName + "List li").size();
 		debug(rowCt);
-		$("#"+fieldName + "List").append("<li id='"+fieldName + "Row"+rowCt+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+fieldName+"\"/></li>");
+		var newElmName = (fieldName + "Row"+rowCt);
+
+		$("#"+fieldName + "List").append("<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+
+			fieldName+"\"/> <select id=\"nutritionType\" class=\"nutritionType"+ rowCt + "\"></select></li>");
 		$("#"+fieldName + "Row"+rowCt).effect("highlight", {}, 3000);		
+		return rowCt;
 	}
 
+	//enable tabs
 	$(function() {
 		$( "#tabs" ).tabs();
-	});
+	});	
 		
 </script>
 
@@ -173,11 +213,11 @@
 			<tr><th><label for="preptime">Prep Time</label></th><td><input type="text" id="preptime" name="preptime" class="large-field"/></td></tr>
 			<tr><th><label for="cooktime">Cook Time</label></th><td><input type="text" id="cooktime" name="cooktime" class="large-field"/></td></tr>
 			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"  class="large-field"/></td></tr>
-			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="addFormField('nutrition'); return false;" alt="Add another">add</a></td></tr>
+			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="appendNutrition(); return false;" alt="Add another">add</a></td></tr>
 			<tr><td colspan=2>		
 			<ul id='nutritionList'>
-				<li><input type="text" id="nutrition" name="nutrition"/></li>
-			<ul id='ingsList'>
+				<li><input type="text" id="nutrition" name="nutrition"/> <select id="nutritionType" class="nutritionType"></select></li>
+			</ul>
 			</td></tr>
 			<tr><th><label for="tag">Tags</label></th><td><input type="text" id="tag" name="tag" class="large-field"/></td></tr>
 		</table>
