@@ -14,6 +14,7 @@ function FormData() {
 	this.$authors = [];
 	this.$published = "";
 	this.$nutritions = [];
+	this.nutritionTypes = [];
 	this.$tags = [];
 }
 

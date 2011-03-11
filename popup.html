@@ -7,8 +7,6 @@
 <script type="text/javascript" src="js/formData.js"></script>
 <script>
 
-//TODO: fix addField so Select is in the nutrition specific function.
-//TODO: get NutritionType data from form
 //TODO: Add save data to localstorage in case of accidentally closing.
 //TODO: Add clear button to reset form if data was left in local storage.
 //TODO: Add hRecipe format for nutrition types. Look into diff on value/type tags
@@ -17,6 +15,8 @@
 //TODO: reverse parse to populate from current page/field for editing.
 //TODO: Find some graphics!
 
+//DONE: get NutritionType data from form and putput in right format
+//DONE: fix addField so Select is in the nutrition specific function.
 //DONE: Add Nutrition type drop down to specify Calories, fat, Total Carbs, Dietary Fiber, protein, sodium, Cholesterol
 //DONE: Add proper value-title tags for the duration times so google will parse it. ex: <span class="value-title" title="PT1H30M"></span> (PT1H30M ? does the PT stand for Pacific time or something else?)
 //DONE: finish time formatter in background for duration types
@@ -28,9 +28,9 @@
 	var nutritionTypes = ["Calories", "Fat", "Total Carbs", "Dietary Fiber", "Protein", "Sodium", "Cholesterol"];
 
 	/**
-	 * Loads existing hRecipe data into fields based on URL and presence of data.
+	 * Initializes the Form after load.
 	 */
-	function loadBlogData() {
+	function initForm() {
 		console.log("Load Blog posting.");
 		chrome.extension.getBackgroundPage().checkURLAction('load');
 		$('#published').datepicker();
@@ -101,7 +101,7 @@
 	}
 	
 
-	$(document).ready(loadBlogData);
+	$(document).ready(initForm);
 	
 	/**
 	 * collect data and create dto.
@@ -113,6 +113,7 @@
 		var formData = new FormData();		
 		formData.$recname = $('#recName').val();	
 		var inglist = getFormArray('ingredient');
+		
 		inglist.unshift($('#ingredient0').val());
 		formData.$ingredients = inglist;
 		formData.$yield = $('#yield').val();
@@ -122,12 +123,14 @@
 		formData.$author = $('#author').val();
 		formData.$published = $('#published').val();
 		formData.$instructions = $('#instructions').val();
+		
+		formData.$nutritionTypes = $("[id^=nutritionType]").map(function(){return $(this).val();}).get();
 		formData.$nutritions = getFormArray('nutrition');
 		formData.$summery = $('#summery').val();
 		formData.$tags = $('#tag').val();
 		
 		return formData		
-	}
+	}	
 	
 	/**
 	 * Retrieve array of data values for same name input fields.
@@ -151,7 +154,7 @@
 		var output = [];
 
 		$.each(nutritionTypes, function(key, value) 	{
-		  	output.push('<option value="'+ key +'">'+ value +'</option>');
+		  	output.push('<option value="'+ value +'">'+ value +'</option>');
 		});
 
 		$("."+nutritionFieldName).html(output.join(''));
@@ -165,14 +168,13 @@
 		var rowCt = $("#"+fieldName + "List li").size();
 		debug(rowCt);
 		var newElmName = (fieldName + "Row"+rowCt);
+		
 		var newHtml = "<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\"/>"
 		if(addSelect)
 			newHtml += "<select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
 		newHtml += "</li>";
-		$("#"+fieldName + "List").append(newHtml);
 		
-		//$("#"+fieldName + "List").append("<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+
-		//	fieldName+"\"/> <select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select></li>");
+		$("#"+fieldName + "List").append(newHtml);
 		$("#"+fieldName + "Row"+rowCt).effect("highlight", {}, 3000);		
 		return rowCt;
 	}

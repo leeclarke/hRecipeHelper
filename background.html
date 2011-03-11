@@ -119,10 +119,11 @@
 			if(data.$nutritions.length>0) {
 				microformat +="<h2>Nutrition</h2>\n";
 				microformat +="<p>\n";
+				microformat +="<span class=\"nutrition\">"
 				for(n in data.$nutritions) {
-					microformat += ("<span class=\"nutrition\">" + data.$nutritions[n] + "</span>\n");
+					microformat += "<span class=\""+ (data.$nutritionTypes[n].replace(" ","")).toLowerCase() + "\">" +(data.$nutritions[n] + "</span>\n");
 				}
-				microformat +="</p>\n";
+				microformat +="</span>\n</p>\n";
 			}    
 		}
 		
