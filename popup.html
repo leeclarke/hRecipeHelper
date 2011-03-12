@@ -109,36 +109,47 @@
 	}
 	
 	function loadFromLocalStore() {
-		var formData = new FormData();
-		for(var prop in (formData)) {
-			if(formData.hasOwnProperty(prop))
+		var objStr = localStorage["hRecipeData"];
+console.log("loadedData == "+objStr);
+		if(objStr && objStr.length >2){
+			var formDataParse = jQuery.parseJSON(objStr);
+			//var formData = JSON.parse();//new FormData();
+			console.log("formDataParse == "+formDataParse + " name==" + formDataParse.$recName);
+		}
+	/*	for(var prop in (formData)) {
+			if(formData.hasOwnProperty(prop)) {
 				var tag = prop.replace("$","");
 
 				var locValue = localStorage[tag];
 console.log("LoadTag=="+tag + "  Val==" +locValue  );
 				$('#'+tag).val(locValue);
-		}
+			}
+		}*/
 	}
 
 	function saveToLocalStore(formData) {
-		//localStorage["recName"] = formData.$recname;
+		localStorage["hRecipeData"] = JSON.stringify(formData);
+				
+		
+/*		var myObj = {"key":"value", "key2":"value2","key3":"value3", $value:"value$"}
+		console.log(JSON.stringify(formData));
 
-		console.log("STRINGY==  "+JSON.stringify(formData));
 		for(var prop in (formData)) {
-			if(formData.hasOwnProperty(prop))
+			if(formData.hasOwnProperty(prop)) {
 				var tag = prop.replace("$","");
 				console.log("tag=="+tag);
 				localStorage[tag] = formData[prop];
-				
-		}
+			}	
+		}*/
 	}
 
 	function clearFormData() {
 		var formData = new FormData();
 		for(var prop in (formData)) {
-			if(formData.hasOwnProperty(prop))
+			if(formData.hasOwnProperty(prop)) {
 //				console.log(prop + " == "+ formData[prop]);
 				localStorage.removeItem(prop);
+			}
 		}
 	}
 
