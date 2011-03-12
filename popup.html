@@ -41,6 +41,7 @@
 		$('#ok').button();
 		$('#done').button();
 		$('#close').button();
+		$('#clear').button();
 		$('#copy').button();
 		$( "#tabs" ).tabs({
 	    	show: function(event, ui) { 		
@@ -103,9 +104,43 @@
 		
 		appendNutritionTypes("nutritionType");
 		
-		//TODO:  loadFromLocalStore()
+		
+		loadFromLocalStore()
 	}
 	
+	function loadFromLocalStore() {
+		var formData = new FormData();
+		for(var prop in (formData)) {
+			if(formData.hasOwnProperty(prop))
+				var tag = prop.replace("$","");
+
+				var locValue = localStorage[tag];
+console.log("LoadTag=="+tag + "  Val==" +locValue  );
+				$('#'+tag).val(locValue);
+		}
+	}
+
+	function saveToLocalStore(formData) {
+		//localStorage["recName"] = formData.$recname;
+
+		console.log("STRINGY==  "+JSON.stringify(formData));
+		for(var prop in (formData)) {
+			if(formData.hasOwnProperty(prop))
+				var tag = prop.replace("$","");
+				console.log("tag=="+tag);
+				localStorage[tag] = formData[prop];
+				
+		}
+	}
+
+	function clearFormData() {
+		var formData = new FormData();
+		for(var prop in (formData)) {
+			if(formData.hasOwnProperty(prop))
+//				console.log(prop + " == "+ formData[prop]);
+				localStorage.removeItem(prop);
+		}
+	}
 
 	$(document).ready(initForm);
 	
@@ -135,9 +170,10 @@
 		formData.$summery = $('#summery').val();
 		formData.$tags = $('#tag').val();
 		
-		return formData		
+		saveToLocalStore(formData)
+		return formData;
 	}	
-	
+
 	/**
 	 * Retrieve array of data values for same name input fields.
 	 */
@@ -187,6 +223,8 @@
 		$("#"+fieldName + "Row"+rowCt).effect("highlight", {}, 3000);		
 		return rowCt;
 	}
+	
+	
 
 	//enable tabs
 	$(function() {
@@ -205,7 +243,7 @@
 		<li><a href="#tabs-1">Edit Recipe</a></li>
 		<li><a href="#tabs-2">hRecipe Results</a></li>
 	</ul>
-	<div align="right"><input type="button" id="done" value="Close" onClick='window.close();'></div>
+	<div align="right"><input type="button" id="clear" value="Clear" onClick='clearFormData();'> <input type="button" id="done" value="Close" onClick='window.close();'></div>
 	<div id="tabs-1">
 		<table>
 			<tr><th><label for="recName">Title</label></th><td><input type="text" id="recName" name="recName" class="large-field"/></td></tr>
