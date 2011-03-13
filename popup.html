@@ -1,3 +1,4 @@
+<!- hRecipeHelper, a Chrome extention for building microformat compatable. Copyright (c) 2011 Lee Clarke LICENSE: GNU v2	-->
 <link type="text/css" href="css/le-frog-cust/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />	
 <link type="text/css" href="css/form-style.css" rel="Stylesheet" />	
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
@@ -96,7 +97,7 @@
 		   wrapper: "div"
 		});
 		
-		//Add a time check function.		
+
 		$.validator.addMethod('checkTime', function( value, element, params ) {
 			if(/^([0-9]?[0-9])$/.test(value))
 				return true; //if just 1-2 digits then its ok assuem mins.
@@ -104,8 +105,6 @@
 		}, "Times should be in the hh:mm format.");
 		
 		appendNutritionTypes("nutritionType");
-		
-		
 		loadFromLocalStore()
 	}
 	
@@ -274,6 +273,7 @@
 	<ul>
 		<li><a href="#tabs-1">Edit Recipe</a></li>
 		<li><a href="#tabs-2">hRecipe Results</a></li>
+		<li><a href="#tabs-3">About</a></li>
 	</ul>
 	<div align="right"><input type="button" id="clear" value="Clear" onClick='clearFormData();'> <input type="button" id="done" value="Close" onClick='window.close();'></div>
 	<div id="tabs-1">
@@ -306,6 +306,11 @@
 	</div>
 	<div id="tabs-2">
 		<div><label for="results">Results</label><textarea id="results" name="results" rows="20" cols="40"></textarea></div>
+	</div>
+	<div id="tabs-3">
+		<div>
+			<a href="https://github.com/leeclarke/hRecipeHelper/wiki" alt="help">Need help? Check the wiki!</a>	
+		</div>
 	</div>
 </body>
 </html>
