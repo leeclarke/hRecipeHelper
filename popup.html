@@ -13,9 +13,10 @@
 //TODO: Consider adding a non-formatting option that uses all span tags so users can style their own.
 //TODO: reverse parse to populate from current page/field for editing.
 //TODO: Find some graphics!
-//TODO: Add Options/About Tab (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
+//TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 //TODO: move scripts to js file once done testing
 
+//DONE: Add About tab
 //DONE: Add clear button to reset form if data was left in local storage.
 //DONE: Add save data to localstorage in case of accidentally closing.
 //DONE: make Ingredients field long.
@@ -96,8 +97,10 @@
 		   focusCleanup: true,
 		   wrapper: "div"
 		});
-		
-
+			
+		/*
+         * Custom Validator for checking time validations using regex
+         */
 		$.validator.addMethod('checkTime', function( value, element, params ) {
 			if(/^([0-9]?[0-9])$/.test(value))
 				return true; //if just 1-2 digits then its ok assuem mins.
@@ -108,6 +111,9 @@
 		loadFromLocalStore()
 	}
 	
+	/**
+     * Retrieve form data from localStoreage and parse Json to FormData object. 
+     */
 	function loadFromLocalStore() {
 		var objStr = localStorage["hRecipeData"];
 		debug("loadedData == "+objStr);
@@ -118,16 +124,24 @@
 		}
 	}
 
+	/**
+     * Write form data to localStorage as Json string.
+     */
 	function saveToLocalStore(formData) {
 		localStorage["hRecipeData"] = JSON.stringify(formData);
 	}
 
+	/**
+     * Clears form fields and saved data.
+     */
 	function clearFormData() {
 		localStorage["hRecipeData"] = "";
 		setFormValues(new FormData());
 	}
 
-	
+	/**
+     * Loads saved data into form fields.
+     */
 	function setFormValues(formData) {
 		$('#recName').val(formData.$recName);			
 		for(i in formData.$ingredients) {
@@ -257,11 +271,12 @@
 	
 	
 
-	//enable tabs
+	/**
+	 * enable tabs
+	 */
 	$(function() {
 		$( "#tabs" ).tabs();
 	});	
-		
 </script>
 
 <html>
@@ -275,7 +290,7 @@
 		<li><a href="#tabs-2">hRecipe Results</a></li>
 		<li><a href="#tabs-3">About</a></li>
 	</ul>
-	<div align="right"><input type="button" id="clear" value="Clear" onClick='clearFormData();'> <input type="button" id="done" value="Close" onClick='window.close();'></div>
+	<div align="right" style"min-width:465px"><input type="button" id="clear" value="Clear" onClick='clearFormData();'> <input type="button" id="done" value="Close" onClick='window.close();'></div>
 	<div id="tabs-1">
 		<table>
 			<tr><th><label for="recName">Title</label></th><td><input type="text" id="recName" name="recName" class="large-field"/></td></tr>
@@ -303,14 +318,21 @@
 			<tr><th><label for="tag">Tags</label></th><td><input type="text" id="tag" name="tag" class="large-field"/></td></tr>
 		</table>
 </form>
+<img src="clearpixel.gif" width=465px>
 	</div>
 	<div id="tabs-2">
 		<div><label for="results">Results</label><textarea id="results" name="results" rows="20" cols="40"></textarea></div>
+<img src="clearpixel.gif" width=465px>
 	</div>
 	<div id="tabs-3">
 		<div>
-			<a href="https://github.com/leeclarke/hRecipeHelper/wiki" alt="help">Need help? Check the wiki!</a>	
+			<p><b>hRecipeHelper</b> makes it easy to include microformatted Recipes in your blogs and webpages ensuring that Google or any other Recipe related tool can easily read the Information. Version 1.0 supports hRecipe 0.22 Format and is compatable with Google search.</p>
+			<p style="text-align: center;"><a href="https://github.com/leeclarke/hRecipeHelper/wiki" alt="help" style="color:#285c00;text-decoration: none;font-weight: bold;">Need help? Check the wiki!</a></p>
+			<p><small><b>hRecipeHelper</b> is Free Software and distributed under a GNUv2 license, <a href="https://github.com/leeclarke/hRecipeHelper/blob/master/GNU_LICENSE" style="color:#285c00;text-decoration: none;font-weight: bold;">click</a> here if ya really want to know more!<br><br>
+			 Copyright &copy 2011 <b>Lee Clarke</b></small></p>
 		</div>
+	<img src="clearpixel.gif" width=465px>
 	</div>
+
 </body>
 </html>

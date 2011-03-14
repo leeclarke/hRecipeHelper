@@ -1,6 +1,5 @@
 body {
-  min-width:400px;
-  min-height: 700px;
+  min-width:465px;
   overflow-x:hidden;
 }
 
@@ -11,5 +10,9 @@ body {
 th {
 	font-weight: bold;
 	float:left
+}
+
+.small-font {
+	font-size:small;
 }
 
