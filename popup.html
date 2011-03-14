@@ -8,6 +8,7 @@
 <script type="text/javascript" src="js/formData.js"></script>
 <script>
 
+//TODO: Add parsing for tags
 //TODO: Refactor code in here its getting ugly.
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
 //TODO: Consider adding a non-formatting option that uses all span tags so users can style their own.
@@ -115,27 +116,15 @@
      * Retrieve form data from localStoreage and parse Json to FormData object. 
      */
 	function loadFromLocalStore() {
-		var objStr = localStorage["hRecipeData"];
-		debug("loadedData == "+objStr);
-		if(objStr && objStr.length >2){
-			var formDataParse = jQuery.parseJSON(objStr);
-			setFormValues(formDataParse)
-			console.log("formDataParse == "+formDataParse + " name==" + formDataParse.$recName);
-		}
-	}
-
-	/**
-     * Write form data to localStorage as Json string.
-     */
-	function saveToLocalStore(formData) {
-		localStorage["hRecipeData"] = JSON.stringify(formData);
+		var formData = loadFormData();
+		setFormValues(formData);
 	}
 
 	/**
      * Clears form fields and saved data.
      */
 	function clearFormData() {
-		localStorage["hRecipeData"] = "";
+		deleteFormData();
 		setFormValues(new FormData());
 	}
 
@@ -209,7 +198,7 @@
 		formData.$tags = $('#tag').val();
 		
 		debug("formData.nTypes="+ formData.$nutritionTypes );
-		saveToLocalStore(formData)
+		saveFormData(formData);
 		return formData;
 	}	
 
