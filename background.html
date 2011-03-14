@@ -48,44 +48,18 @@
 		debug("done");
 	}
 
-//TODO:clean up method below.	
-	/**
-	 * Looks at the URL to determine what should be done given the action type of 'load' or 'post',
-	 * based on the site in current browser tab. 
-	 *
-	 * This might still be useful for knowing where to get data for loading but then again maybe goign 
-	 * off the current field is enough.?
-	 * @param - actionType ('load'|'post')
-	 */
-	function checkURLAction(actionType){	
-		chrome.tabs.getSelected(null, function(tab) {    
-		var url = tab.url;						
-		jQuery.url.setUrl(url)
-		debug("HOST="+jQuery.url.attr("host"));
+	/* a few notes to be used for new features
+	chrome.tabs.getSelected(null, function(tab) {    
+	var url = tab.url;						
+	jQuery.url.setUrl(url)
+	debug("HOST="+jQuery.url.attr("host"));
 
-		//TODO: get selected text field and post code to there, if none selected then err
-			if("load" == actionType) {
-				populateFieldData();
-
-			}
-			else if("post" == actionType) {
-				debug('NO BLOGGER POST');
-				var hRecipeCode = convertTohRecipe(data);
-				debug("hrecipe=="+hRecipeCode);
-				//var currField == document.activeElement;
-				chrome.tabs.executeScript(null, {code:"updateText('TESTER')"})
-				chrome.tabs.executeScript(null, {code:"console.log('active=='+document.activeElement)"})
-			}
-
-		});   
-	}
+			//var currField == document.activeElement;
+			//chrome.tabs.executeScript(null, {code:"updateText('TESTER')"})
+			//chrome.tabs.executeScript(null, {code:"console.log('active=='+document.activeElement)"})
+	});   
+	*/
 	
-	/**
-	 * Inspect the provided html, parse out hRecipe data if present and sets form fields.
-	 */
-	function populateFieldData() {
-		//TODO: you know what to do!
-	}
 
 	/**
 	 * Converts data to the hRecipe format with default formatting tags.

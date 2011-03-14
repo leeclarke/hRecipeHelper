@@ -7,9 +7,9 @@
 <script type="text/javascript" src="js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/formData.js"></script>
 <script>
-
 //TODO: Add parsing for tags
-//TODO: Refactor code in here its getting ugly.
+//TODO: Test result more.
+//TODO: Release 1.0
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
 //TODO: Consider adding a non-formatting option that uses all span tags so users can style their own.
 //TODO: reverse parse to populate from current page/field for editing.
@@ -17,6 +17,8 @@
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 //TODO: move scripts to js file once done testing
 
+//DNEO: Fix clear fail for Ingredients
+//DONE: Refactor code in here its getting ugly.
 //DONE: Add About tab
 //DONE: Add clear button to reset form if data was left in local storage.
 //DONE: Add save data to localstorage in case of accidentally closing.
@@ -34,12 +36,13 @@
 //DONE: fix Duration Output.
 
 	var nutritionTypes = ["Calories", "Fat", "Total Carbs", "Dietary Fiber", "Protein", "Sodium", "Cholesterol"];
+	$(document).ready(initForm);
 
 	/**
 	 * Initializes the Form after load.
 	 */
 	function initForm() {
-		console.log("Load Blog posting.");
+		debug("Load Blog posting.");
 		chrome.extension.getBackgroundPage().checkURLAction('load');
 		$('#published').datepicker();
 		$('#ok').button();
@@ -109,13 +112,13 @@
 		}, "Times should be in the hh:mm format.");
 		
 		appendNutritionTypes("nutritionType");
-		loadFromLocalStore()
+		loadForm();
 	}
 	
 	/**
      * Retrieve form data from localStoreage and parse Json to FormData object. 
      */
-	function loadFromLocalStore() {
+	function loadForm() {
 		var formData = loadFormData();
 		setFormValues(formData);
 	}
@@ -140,6 +143,10 @@
 				addFormField('ingredient', false, formData.$ingredients[i]);				
 			}
 		}
+		if(formData.$ingredients.length == 0) {
+			clearArrayFields('ingredient');
+		}
+		
 		$('#yield').val((formData.$yield == 0)?"":formData.$yield);
 		$('#cooktime').val((formData.$cooktime == 0)?"":formData.$cooktime);
 		$('#preptime').val((formData.$preptime == 0)?"":formData.$preptime);
@@ -156,13 +163,13 @@
 				appendNutrition(formData.$nutritions[n], formData.$nutritionTypes[n]);
 			}
 		}		
+		if(formData.$ingredients.length == 0) {
+			clearArrayFields('nutrition');
+		}
 
 		$('#summery').val(formData.$summery);
-		$('#tag').val(formData.$tags);
-		
+		$('#tag').val(formData.$tags);		
 	}	
-
-	$(document).ready(initForm);
 
 	/* Add listener to catch popup close event. */
 	var background = chrome.extension.getBackgroundPage();
@@ -171,6 +178,23 @@
 		initData();
 	}, true);
 
+	/**
+	 * Clears the array field sets, due to differences in structure it take a bit of non-generic code, might want to revisit this as a TechDebt later.
+	 */
+	function clearArrayFields(fieldName) {		
+		$("[id^='"+fieldName+"Row']").map(function(){
+			debug("id=="+this.id);
+			$(this).remove();			
+		}).get();
+		
+		if(fieldName == 'ingredient') {
+			$('#ingredient0').val('');
+		} else {
+			$('#nutrition').val('');
+			$('#'+ fieldName+'Type').val(nutritionTypes[0].toLowerCase());	
+		}
+	}
+	
 	/**
 	 * collect data and create dto. Save to local.
 	 */
@@ -258,7 +282,6 @@
 		return rowCt;
 	}
 	
-	
 
 	/**
 	 * enable tabs
@@ -301,7 +324,7 @@
 			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="appendNutrition(); return false;" alt="Add another">add</a></td></tr>
 			<tr><td colspan=2>		
 			<ul id='nutritionList'>
-				<li><input type="text" id="nutrition" name="nutrition"/> <select id="nutritionType" class="nutritionType"></select></li>
+				<li><input type="text" id="nutrition" name="nutrition0" class="nutrition0"/> <select id="nutritionType" class="nutritionType"></select></li>
 			</ul>
 			</td></tr>
 			<tr><th><label for="tag">Tags</label></th><td><input type="text" id="tag" name="tag" class="large-field"/></td></tr>
@@ -315,8 +338,8 @@
 	</div>
 	<div id="tabs-3">
 		<div>
-			<p><b>hRecipeHelper</b> makes it easy to include microformatted Recipes in your blogs and webpages ensuring that Google or any other Recipe related tool can easily read the Information. Version 1.0 supports hRecipe 0.22 Format and is compatable with Google search.</p>
 			<p style="text-align: center;"><a href="https://github.com/leeclarke/hRecipeHelper/wiki" alt="help" style="color:#285c00;text-decoration: none;font-weight: bold;">Need help? Check the wiki!</a></p>
+			<p><b>hRecipeHelper</b> makes it easy to include microformatted <a href="http://microformats.org/wiki/hrecipe" style="color:#285c00;text-decoration: none;font-weight: bold;">hRecipes</a> in your blogs and webpages ensuring that Google or any other Recipe related tool can easily read the Information. Version 1.0 supports hRecipe 0.22 Format and is compatable with Google search.</p>
 			<p><small><b>hRecipeHelper</b> is Free Software and distributed under a GNUv2 license, <a href="https://github.com/leeclarke/hRecipeHelper/blob/master/GNU_LICENSE" style="color:#285c00;text-decoration: none;font-weight: bold;">click</a> here if ya really want to know more!<br><br>
 			 Copyright &copy 2011 <b>Lee Clarke</b></small></p>
 		</div>
