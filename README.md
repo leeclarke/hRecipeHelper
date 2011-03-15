@@ -1,7 +1,7 @@
 # A Chrome extension that will help you insert microformat-ed (hRecipe) recipes into your blog.
 
 ## OVERVIEW
-hRecipeHelper is a Chrome extension which will gives bloggers a simple interface to enter their favorite recipes and have them automatically formatted with compliant ![hRecipe](http://microformats.org/wiki/hrecipe) microformat. By formatting your recipes with hRecipe your making your Recipe easier for the new Google Recipe search to find your recipe when searching for similar recipes making it possible for you to share great food with the world!
+hRecipeHelper is a Chrome extension which will gives bloggers a simple interface to enter their favorite recipes and have them automatically formatted with compliant [hRecipe](http://microformats.org/wiki/hrecipe) microformat. By formatting your recipes with hRecipe your making your Recipe easier for the new [Google Recipe Search](http://www.google.com/landing/recipes/) to find your recipe when searching for similar recipes making it possible for you to share great food with the world!
 
 ![Web App](https://lh4.googleusercontent.com/_siA-HB1thIA/TX91yJokbNI/AAAAAAAAAOU/w0c7OOtld1g/hRecipeHelper-popup.png)
 
