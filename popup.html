@@ -23,7 +23,7 @@
 //DONE: Add clear button to reset form if data was left in local storage.
 //DONE: Add save data to localstorage in case of accidentally closing.
 //DONE: make Ingredients field long.
-//DONE: Add hRecipe format for nutrition types. Look into diff on value/type tags
+//DONE: Add hRecipe format for nutrition types. Look into diff on value/type tagsg
 //DONE: test duration validation, it should NOT allow "40 min" as an entry.
 //DONE: get NutritionType data from form and putput in right format
 //DONE: fix addField so Select is in the nutrition specific function.
@@ -43,7 +43,7 @@
 	 */
 	function initForm() {
 		debug("Load Blog posting.");
-		chrome.extension.getBackgroundPage().checkURLAction('load');
+		//chrome.extension.getBackgroundPage().checkURLAction('load');
 		$('#published').datepicker();
 		$('#ok').button();
 		$('#done').button();
@@ -168,13 +168,14 @@
 		}
 
 		$('#summery').val(formData.$summery);
-		$('#tag').val(formData.$tags);		
+		var tagStrings = (formData.$tags)? formData.$tags.join():''; 
+		$('#tag').val(tagStrings);		
 	}	
 
 	/* Add listener to catch popup close event. */
 	var background = chrome.extension.getBackgroundPage();
 	addEventListener("unload", function (event) {
-		background.console.log(event.type + " XXXXXXX");
+		debug(event.type + " XXXXXXX");
 		initData();
 	}, true);
 
@@ -200,7 +201,7 @@
 	 */
 	function initData() {
 
-		console.log("is valid=="+	$("#recipeForm").valid());
+		debug("is valid=="+	$("#recipeForm").valid());
 
 		var formData = new FormData();		
 		formData.$recName = $('#recName').val();	
@@ -219,7 +220,7 @@
 		formData.$nutritionTypes = $("[id^=nutritionType]").map(function(){return $(this).val();}).get();
 		formData.$nutritions = getFormArray('nutrition');
 		formData.$summery = $('#summery').val();
-		formData.$tags = $('#tag').val();
+		formData.$tags = $('#tag').val().split(',');
 		
 		debug("formData.nTypes="+ formData.$nutritionTypes );
 		saveFormData(formData);

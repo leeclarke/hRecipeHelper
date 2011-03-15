@@ -19,7 +19,6 @@
  <http://www.gnu.org/licenses/>.
 -->
 <html>
-
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery.url.js"></script>
 <script type="text/javascript" src="js/formData.js"></script>
@@ -120,6 +119,9 @@
 				}
 				microformat +="</span>\n</p>\n";
 			}    
+			for(t in data.$tags) {
+				microformat +="<span class=\"tag\">"+data.$tags[t]+"</span>\n";
+			}	
 		}
 		
 		microformat += "</div>";
