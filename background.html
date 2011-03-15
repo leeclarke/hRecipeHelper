@@ -115,17 +115,38 @@
 				microformat +="<p>\n";
 				microformat +="<span class=\"nutrition\">"
 				for(n in data.$nutritions) {
-					microformat += "<span class=\""+ (data.$nutritionTypes[n].replace(" ","")).toLowerCase() + "\">" +(data.$nutritions[n] + "</span>\n");
+					microformat += toProperCase(data.$nutritionTypes[n])+": <span class=\""+ (data.$nutritionTypes[n].replace(" ","")).toLowerCase() + "\">" +(data.$nutritions[n] + "</span>\n");
 				}
 				microformat +="</span>\n</p>\n";
 			}    
-			for(t in data.$tags) {
-				microformat +="<span class=\"tag\">"+data.$tags[t]+"</span>\n";
-			}	
+			if(data.$tags && data.$tags.length >0) {
+				var tagCode = [];
+				microformat +="<span>Tags: ";
+				for(t in data.$tags) {
+					tagCode.push("<span class=\"tag\">"+data.$tags[t]+"</span>");
+				}	
+				microformat += tagCode.join(',');
+				microformat +="</span>";
+			}
 		}
 		
 		microformat += "</div>";
 		return microformat;
+	}
+
+	/**
+	 * Makes first letter of each word uppercase.
+	 */
+	function toProperCase(strIn) {
+		var results = []
+		if(strIn) {
+			var words = strIn.toLowerCase().split(" ");
+			for(w in words) {
+				var first = words[w].charAt(0).toUpperCase();
+				results.push(first + words[w].substr(1));
+			}
+		}
+		return results.join(" ");
 	}
 
 	/**
