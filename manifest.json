@@ -1,15 +1,17 @@
 {
   // Required
   "name": "hRecipe Helper",
-  "version": "1.0",
+  "version": "1.1",
 
   // Recommended
-  "description": "Tool to help insert hRecipe formated recipes into your blog.",
- // "icons": { "recipeCard.gif"},
+  "description": "A tool to help format your recipes in the Google Recipe View friendly hRecipe micro-format.",
+  "icons": { "16": "hRecipeIcon-16.png",
+           "48": "hRecipeIcon-48.png",
+           "128": "hRecipeIcon-128.png"},
 
   "background_page": "background.html",
   "browser_action": {
-    "default_icon": "recipeCard.gif",
+    "default_icon": "hRecipeIcon-16.png",
     "popup": "popup.html"
   },
   "content_scripts": [
@@ -23,5 +25,6 @@
 	"tabs",    
 	"http://*/*",
 	"https://*/*"
-  ]	
+  ],
+  "minimum_chrome_version": "8.0"
 }
