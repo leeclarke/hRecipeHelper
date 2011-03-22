@@ -71,7 +71,7 @@
 			if(data.$summary) microformat += ("<p class=\"summary\">" + data.$summary + "</p>\n");
 			if(data.$author) microformat += ("<p class=\"author\">" + data.$author + "</p>\n");
 			if(data.$published) microformat += ("<p>Published <span class=\"published\">" + data.$published + "</span></p>\n");
-			if(data.$photos.length>0) {
+			if(data.$photos.length>0 && data.$photos[0].length > 0) {
 				microformat += ("<img src=\"" + data.$photos[0] + "\" class=\"photo\" style=\"height:140px;width:140px;border-width:0px;\" alt=\"" + data.$recName + "\">\n");
 			}
 			if(data.$summery) microformat += ("<p class=\"summery\">" + data.$summery + "</p>\n");
@@ -87,7 +87,7 @@
 				microformat += ("<span class=\"instructions\">" + data.$instructions + "</span>\n");
 			}
 			
-			if(data.$yield) microformat += ("<p>Yield:<span class=\"yield\">"+data.$yield+"</span></p>\n");
+			if(data.$yield) microformat += ("<p>Yield:<span class=\"yield\"> "+data.$yield+"</span></p>\n");
 			
 			if(data.$preptime || data.$cooktime) {
 				microformat += "<span class=\"duration\">\n";
@@ -97,12 +97,12 @@
 				
 				if(data.$preptime) {
 					prep = parseTime(data.$preptime);
-					microformat += ("<p>Prep Time:<span class=\"preptime\"><span class=\"value-title\" title=\""+prep+"\"></span>"+data.$preptime+"</span></p>\n");
+					microformat += ("<p>Prep Time:<span class=\"preptime\"><span class=\"value-title\" title=\""+prep+"\"></span> "+data.$preptime+"</span></p>\n");
 					
 				}
 				if(data.$cooktime) {
 					cook = parseTime(data.$cooktime);
-					microformat += ("<p>Cook time:<span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span>"+data.$cooktime+"</span></p>\n");				
+					microformat += ("<p>Cook time:<span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span> "+data.$cooktime+"</span></p>\n");				
 				}
 				
 				microformat += "</span>\n";
@@ -110,16 +110,17 @@
 			
 			
 			
-			if(data.$nutritions.length>0) {
+			if(data.$nutritions.length>0 && data.$nutritions[0].length >0) {
 				microformat +="<h2>Nutrition</h2>\n";
 				microformat +="<p>\n";
 				microformat +="<span class=\"nutrition\">"
 				for(n in data.$nutritions) {
-					microformat += toProperCase(data.$nutritionTypes[n])+": <span class=\""+ (data.$nutritionTypes[n].replace(" ","")).toLowerCase() + "\">" +(data.$nutritions[n] + "</span>\n");
+					if(data.$nutritions[n].length >0)
+						microformat += toProperCase(data.$nutritionTypes[n])+": <span class=\""+ (data.$nutritionTypes[n].replace(" ","")).toLowerCase() + "\">" +(data.$nutritions[n] + "</span>\n");
 				}
 				microformat +="</span>\n</p>\n";
 			}    
-			if(data.$tags && data.$tags.length >0) {
+			if(data.$tags && data.$tags.length >0 && data.$tags[0].length > 0) {
 				var tagCode = [];
 				microformat +="<span>Tags: ";
 				for(t in data.$tags) {
