@@ -1,3 +1,7 @@
+//TODO: Add option to enter Instruction steps.
+//TODO: Add some notes to results to copy paste results.
+//TODO: add copy paste button.
+//TODO: Add checks for any missing data on html gen.
 //TODO: Add ability to toggle off the line breaks in results.
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
 //TODO: Consider adding a non-formatting option that uses all span tags so users can style their own.
@@ -5,6 +9,7 @@
 //TODO: Find some graphics!
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
+//DONE: fixed code gen when no picture and no nutritional info.
 //DONE: Release 1.0
 //DONE: move scripts to js file once done testing
 //DONE: Add parsing for tags
