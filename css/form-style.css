@@ -4,7 +4,7 @@ body {
 }
 
 .large-field {
-	width: 300px;
+	width: 360px;
 }
 
 th {
@@ -16,3 +16,6 @@ th {
 	font-size:small;
 }
 
+.xlarge-field {
+	width: 416px;
+}

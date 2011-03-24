@@ -1,6 +1,6 @@
+//TODO: consider making Instr fields a 2row textArea
 //TODO: Remove blank array items.
-//TODO: fix any methods currently manipulating instructions.
-//TODO: Add option to enter Instruction steps.
+//TODO: Add option to Toggle back to one text area on Instructions?
 //TODO: add copy paste button.
 //TODO: Add ability to toggle off the line breaks in results.
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
@@ -9,6 +9,7 @@
 //TODO: Find some graphics!
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
+//DONE: fix any methods currently manipulating instructions.
 //DONE: Add checks for any missing data on html gen.
 //DONE: fixed code gen when no picture and no nutritional info.
 //DONE: Release 1.0
@@ -142,6 +143,9 @@
 		if(formData.$ingredients.length == 0) {
 			clearArrayFields('ingredient');
 		}
+		if(formData.$instructions.length == 0) {
+					clearArrayFields('instruction');
+		}
 		
 		$('#yield').val((formData.$yield == 0)?"":formData.$yield);
 		$('#cooktime').val((formData.$cooktime == 0)?"":formData.$cooktime);
@@ -154,7 +158,8 @@
 			if(i==0) {
 				$('#instruction0').val(formData.$instructions[i])
 			} else {
-				addFormField('instruction', false, formData.$instructions[i]);				
+				if(formData.$instructions[i].length > 0)
+					addFormField('instruction', false, formData.$instructions[i]);				
 			}
 		}
 
@@ -163,10 +168,12 @@
 				$('#nutrition').val(formData.$nutritions[n]);
 				$('.'+'nutritionType').val(formData.$nutritionTypes[n]);
 			} else {
-				appendNutrition(formData.$nutritions[n], formData.$nutritionTypes[n]);
+				if(formData.$nutritions[i].length > 0) {
+					appendNutrition(formData.$nutritions[n], formData.$nutritionTypes[n]);
+				}
 			}
 		}		
-		if(formData.$ingredients.length == 0) {
+		if(formData.$nutritions.length == 0) {
 			clearArrayFields('nutrition');
 		}
 
@@ -178,7 +185,6 @@
 	/* Add listener to catch popup close event. */
 	var background = chrome.extension.getBackgroundPage();
 	addEventListener("unload", function (event) {
-		debug(event.type + " XXXXXXX");
 		initData();
 	}, true);
 
@@ -191,7 +197,9 @@
 			$(this).remove();			
 		}).get();
 		
-		if(fieldName == 'ingredient') {
+		if(fieldName == 'instruction') {
+			$('#instruction0').val('');
+		} else if(fieldName == 'ingredient') {
 			$('#ingredient0').val('');
 		} else {
 			$('#nutrition').val('');
