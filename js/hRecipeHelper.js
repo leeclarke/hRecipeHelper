@@ -1,5 +1,5 @@
+//BUG:  Nutritional items are being dropped if array > 1
 //TODO: consider making Instr fields a 2row textArea
-//TODO: Remove blank array items.
 //TODO: Add option to Toggle back to one text area on Instructions?
 //TODO: add copy paste button.
 //TODO: Add ability to toggle off the line breaks in results.
@@ -9,6 +9,7 @@
 //TODO: Find some graphics!
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
+//DONE: Remove blank array items.
 //DONE: fix any methods currently manipulating instructions.
 //DONE: Add checks for any missing data on html gen.
 //DONE: fixed code gen when no picture and no nutritional info.
