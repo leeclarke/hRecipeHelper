@@ -1,7 +1,7 @@
+//TODO: Remove blank array items.
+//TODO: fix any methods currently manipulating instructions.
 //TODO: Add option to enter Instruction steps.
-//TODO: Add some notes to results to copy paste results.
 //TODO: add copy paste button.
-//TODO: Add checks for any missing data on html gen.
 //TODO: Add ability to toggle off the line breaks in results.
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
 //TODO: Consider adding a non-formatting option that uses all span tags so users can style their own.
@@ -9,6 +9,7 @@
 //TODO: Find some graphics!
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
+//DONE: Add checks for any missing data on html gen.
 //DONE: fixed code gen when no picture and no nutritional info.
 //DONE: Release 1.0
 //DONE: move scripts to js file once done testing
@@ -52,7 +53,6 @@
 		});
 		$( "#tabs" ).bind( "tabsshow", function(event, ui) {
 			if(ui.panel.id == "tabs-2") {
-				debug("Got Tab");
 				var formData = initData();
 				if($("#recipeForm").valid() && formData){
 					var output = chrome.extension.getBackgroundPage().processData(formData);
@@ -149,7 +149,14 @@
 		$('#photo').val((formData.$photos[0])?formData.$photos[0]:"");
 		$('#author').val(formData.$author);
 		$('#published').val(formData.$published);
-		$('#instructions').val(formData.$instructions);
+		$('#instruction0').val(formData.$instructions[0]);
+		for(i in formData.$instructions) {
+			if(i==0) {
+				$('#instruction0').val(formData.$instructions[i])
+			} else {
+				addFormField('instruction', false, formData.$instructions[i]);				
+			}
+		}
 
 		for(n in formData.$nutritions) {
 			if(n==0) {
@@ -211,7 +218,14 @@
 		formData.$photos = [$('#photo').val()];
 		formData.$author = $('#author').val();
 		formData.$published = $('#published').val();
-		formData.$instructions = $('#instructions').val();
+
+		var instlist = getFormArray('instruction');
+		instlist.unshift($('#instruction0').val());
+
+		debug("instlist=="+instlist);
+		formData.$instructions = instlist;
+		//formData.$instructions = $('#instructions').val();
+
 		
 		formData.$nutritionTypes = $("[id^=nutritionType]").map(function(){return $(this).val();}).get();
 		formData.$nutritions = getFormArray('nutrition');

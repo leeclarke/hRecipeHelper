@@ -35,8 +35,13 @@
 				<li><input type="text" id="ingredient0" name="ingredient0" class="large-field"/></li>
 			</ul>
 			</td></tr>
-			<tr><th colspan=2><label for="instructions">Instructions</label></th>
-			<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="43"></textarea></td></tr>
+			<tr><th colspan=2><label for="instructions">Instructions </label></th><td><a href="#" onClick="addFormField('instruction'); return false;">add step</a></th>
+			<!--<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="43"></textarea></td></tr>-->
+			<tr><td colspan=2>
+				<ul id='instructionList'>
+					<li><input type="text" id="instruction0" name="instruction0" class="large-field"/></li>
+				</ul>
+			</td></tr>
 			<tr><th><label for="preptime">Prep Time</label></th><td><input type="text" id="preptime" name="preptime" class="large-field"/></td></tr>
 			<tr><th><label for="cooktime">Cook Time</label></th><td><input type="text" id="cooktime" name="cooktime" class="large-field"/></td></tr>
 			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"  class="large-field"/></td></tr>
@@ -58,7 +63,7 @@
 	<div id="tabs-3">
 		<div>
 			<p style="text-align: center;"><a href="https://github.com/leeclarke/hRecipeHelper/wiki" alt="help" style="color:#285c00;text-decoration: none;font-weight: bold;">Need help? Check the wiki!</a></p>
-			<p><b>hRecipeHelper</b> makes it easy to include microformatted <a href="http://microformats.org/wiki/hrecipe" style="color:#285c00;text-decoration: none;font-weight: bold;">hRecipes</a> in your blogs and webpages ensuring that Google or any other Recipe related tool can easily read the Information. Version 1.2 supports hRecipe 0.22 Format and is compatable with Google search.</p>
+			<p><b>hRecipeHelper</b> makes it easy to include microformatted <a href="http://microformats.org/wiki/hrecipe" style="color:#285c00;text-decoration: none;font-weight: bold;">hRecipes</a> in your blogs and webpages ensuring that Google or any other Recipe related tool can easily read the Information. Version 1.1.2 supports hRecipe 0.22 Format and is compatable with Google search.</p>
 			<p><small><b>hRecipeHelper</b> is Free Software and distributed under a GNUv2 license, <a href="https://github.com/leeclarke/hRecipeHelper/blob/master/GNU_LICENSE" style="color:#285c00;text-decoration: none;font-weight: bold;">click</a> here if ya really want to know more!<br><br>
 			 Copyright &copy 2011 <b>Lee Clarke</b></small></p>
 		</div>
