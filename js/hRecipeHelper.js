@@ -1,4 +1,3 @@
-//BUG:  Nutritional items are being dropped if array > 1
 //TODO: consider making Instr fields a 2row textArea
 //TODO: Add option to Toggle back to one text area on Instructions?
 //TODO: add copy paste button.
@@ -9,6 +8,7 @@
 //TODO: Find some graphics!
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
+//DONE: BUG:  Nutritional items are being dropped if array > 1
 //DONE: Remove blank array items.
 //DONE: fix any methods currently manipulating instructions.
 //DONE: Add checks for any missing data on html gen.
@@ -169,7 +169,7 @@
 				$('#nutrition').val(formData.$nutritions[n]);
 				$('.'+'nutritionType').val(formData.$nutritionTypes[n]);
 			} else {
-				if(formData.$nutritions[i].length > 0) {
+				if(formData.$nutritions[n].length > 0) {
 					appendNutrition(formData.$nutritions[n], formData.$nutritionTypes[n]);
 				}
 			}
@@ -238,6 +238,7 @@
 		
 		formData.$nutritionTypes = $("[id^=nutritionType]").map(function(){return $(this).val();}).get();
 		formData.$nutritions = getFormArray('nutrition');
+		debug('nutrition==' + formData.$nutritions.toString());
 		formData.$summery = $('#summery').val();
 		formData.$tags = $('#tag').val().split(',');
 		
@@ -274,7 +275,7 @@
 		  	output.push('<option value="'+ (value.replace(" ","")).toLowerCase() +'">'+ value +'</option>');
 		});
 		$("."+nutritionTypeFieldName).html(output.join(''));
-		debug("##updated sleect name==" +"."+nutritionTypeFieldName);
+		debug("##updated select name==" +"."+nutritionTypeFieldName);
 	}
 	
 	/**
@@ -293,7 +294,7 @@
 		if(addSelect) {
 			newHtml += "/> <select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
 		} else {
-			newHtml += " class=\"large-field\"/>";
+			newHtml += " class=\"xlarge-field\"/>";
 		}
 		newHtml += "</li>";
 		
