@@ -5,7 +5,6 @@
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
 //TODO: Consider adding a non-formatting option that uses all span tags so users can style their own.
 //TODO: reverse parse to populate from current page/field for editing.
-//TODO: Find some graphics!
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
 //DONE: BUG:  Nutritional items are being dropped if array > 1
