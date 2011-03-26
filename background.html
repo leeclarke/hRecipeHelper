@@ -79,7 +79,9 @@
 			microformat +="<h2>Ingredients</h2>\n"
 			microformat +="<ul>\n"
 			for(i in data.$ingredients) {
-				microformat += ("<li class=\"ingredient\">" + data.$ingredients[i] + "</li>\n");
+				if(data.$ingredients[i].length >0) {
+					microformat += ("<li class=\"ingredient\">" + data.$ingredients[i] + "</li>\n");
+				}
 			}
 			microformat +="</ul>\n"
 			
@@ -87,7 +89,9 @@
 				microformat +="<h2>Instructions</h2>\n";
 				microformat +="<ol>\n";
 				for(i in data.$instructions) {
-					microformat += ("<li class=\"ingredient\">" + data.$instructions[i] + "</li>\n");
+					if(data.$instructions[i].length >0) {
+						microformat += ("<li class=\"ingredient\">" + data.$instructions[i] + "</li>\n");
+					}
 				}
 				microformat +="</ol>\n";
 				//microformat += ("<span class=\"instructions\">" + data.$instructions + "</span>\n");

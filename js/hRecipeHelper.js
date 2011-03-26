@@ -1,4 +1,3 @@
-//TODO: Add option to Toggle back to one text area on Instructions?
 //TODO: add copy paste button.
 //TODO: Add ability to toggle off the line breaks in results.
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
@@ -297,7 +296,6 @@
 				newHtml += value;
 			}
 			newHtml += "</textarea>";
-console.log('newHtml=='+newHtml);
 		} else {
 			newHtml += "<input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\" ";
 			if(value) {
@@ -310,15 +308,6 @@ console.log('newHtml=='+newHtml);
 			}
 		}
 
-/*		var newHtml = "<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\" "
-		if(value) {
-			newHtml += " value=\""+value+"\" ";
-		}
-		if(addSelect) {
-			newHtml += "/> <select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
-		} else {
-			newHtml += " class=\"xlarge-field\"/>";
-		}*/
 		newHtml += "</li>";
 		
 		$("#"+fieldName + "List").append(newHtml);
