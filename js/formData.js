@@ -1,4 +1,4 @@
-var debugEnabled = true;
+var debugEnabled = false;
 
 /**
  * Object representing the Form Data used to generate the hRecipe code.
