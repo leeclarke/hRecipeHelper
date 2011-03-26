@@ -9,7 +9,7 @@ body {
 
 th {
 	font-weight: bold;
-	float:left
+	float:left;
 }
 
 .small-font {
@@ -18,4 +18,9 @@ th {
 
 .xlarge-field {
 	width: 416px;
+}
+
+.midItem {
+	vertical-align:middle;
+line-height: 1.5em;
 }

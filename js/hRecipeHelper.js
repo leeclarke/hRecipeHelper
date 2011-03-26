@@ -1,4 +1,3 @@
-//TODO: consider making Instr fields a 2row textArea
 //TODO: Add option to Toggle back to one text area on Instructions?
 //TODO: add copy paste button.
 //TODO: Add ability to toggle off the line breaks in results.
@@ -7,6 +6,7 @@
 //TODO: reverse parse to populate from current page/field for editing.
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
+//DONE: consider making Instr fields a 2row textArea
 //DONE: BUG:  Nutritional items are being dropped if array > 1
 //DONE: Remove blank array items.
 //DONE: fix any methods currently manipulating instructions.
@@ -21,7 +21,7 @@
 //DONE: Add clear button to reset form if data was left in local storage.
 //DONE: Add save data to localstorage in case of accidentally closing.
 //DONE: make Ingredients field long.
-//DONE: Add hRecipe format for nutrition types. Look into diff on value/type tagsg
+//DONE: Add hRecipe format for nutrition types. Look into diff on value/type tags
 //DONE: test duration validation, it should NOT allow "40 min" as an entry.
 //DONE: get NutritionType data from form and putput in right format
 //DONE: fix addField so Select is in the nutrition specific function.
@@ -159,7 +159,7 @@
 				$('#instruction0').val(formData.$instructions[i])
 			} else {
 				if(formData.$instructions[i].length > 0)
-					addFormField('instruction', false, formData.$instructions[i]);				
+					addFormField('instruction', false, formData.$instructions[i], true);				
 			}
 		}
 
@@ -227,7 +227,7 @@
 		formData.$author = $('#author').val();
 		formData.$published = $('#published').val();
 
-		var instlist = getFormArray('instruction');
+		var instlist = getTextAreaArray('instruction');
 		instlist.unshift($('#instruction0').val());
 
 		debug("instlist=="+instlist);
@@ -251,6 +251,10 @@
 	 */
 	function getFormArray(id) {
 		return $("input[id='"+id+"']").map(function(){return $(this).val();}).get();
+	}
+
+	function getTextAreaArray(id) {
+		return $("textarea[id='"+id+"']").map(function(){return $(this).val();}).get();
 	}
 
 	/**
@@ -279,14 +283,34 @@
 	
 	/**
 	 * Adds array type field to form.
+	 * @param textarea - indicates the field should be a textarea.
 	 * @return - element name where added
 	 */
-	function addFormField(fieldName, addSelect, value) {
+	function addFormField(fieldName, addSelect, value, textarea) {
 		var rowCt = $("#"+fieldName + "List li").size();
 		debug(rowCt);
 		var newElmName = (fieldName + "Row"+rowCt);
-		
-		var newHtml = "<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\" "
+		var newHtml = "<li id='"+newElmName+"' >";
+		if(textarea) {
+			newHtml += "<textarea id=\""+fieldName+"\" name=\""+ fieldName+"\" rows=\"2\" cols=\"43\" class=\"midItem xlarge-field\">";
+			if(value) {
+				newHtml += value;
+			}
+			newHtml += "</textarea>";
+console.log('newHtml=='+newHtml);
+		} else {
+			newHtml += "<input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\" ";
+			if(value) {
+				newHtml += " value=\""+value+"\" ";
+			}
+			if(addSelect) {
+				newHtml += "/> <select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
+			} else {
+				newHtml += " class=\"xlarge-field\"/>";
+			}
+		}
+
+/*		var newHtml = "<li id='"+newElmName+"'><input type=\"text\" id=\""+fieldName+"\" name=\""+ fieldName+"\" "
 		if(value) {
 			newHtml += " value=\""+value+"\" ";
 		}
@@ -294,7 +318,7 @@
 			newHtml += "/> <select id=\""+fieldName+"Type\" class=\""+fieldName+"Type"+ rowCt + "\"></select>";
 		} else {
 			newHtml += " class=\"xlarge-field\"/>";
-		}
+		}*/
 		newHtml += "</li>";
 		
 		$("#"+fieldName + "List").append(newHtml);
