@@ -1,6 +1,6 @@
 {
   "name": "hRecipe Helper",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A tool to help format your recipes in the Google Recipe View friendly hRecipe micro-format.",
   "icons": { "16": "hRecipeIcon-16.png",
            "48": "hRecipeIcon-48.png",
@@ -11,13 +11,6 @@
     "default_icon": "hRecipeIcon-16.png",
     "popup": "popup.html"
   },
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"], 
-      "js": [ "js/jquery-1.4.4.min.js", "content_script.js"],
-	   "all_frames": true
-    }
-  ],
   "permissions": [
 	"tabs",    
 	"http://*/*",

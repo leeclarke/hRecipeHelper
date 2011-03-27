@@ -87,13 +87,14 @@
 			
 			if(data.$instructions) {
 				microformat +="<h2>Instructions</h2>\n";
-				microformat +="<ol>\n";
+				var listType = (data.$instructions.length==1)?"ul":"ol";
+				microformat +="<" + listType + ">\n";
 				for(i in data.$instructions) {
 					if(data.$instructions[i].length >0) {
 						microformat += ("<li class=\"ingredient\">" + data.$instructions[i] + "</li>\n");
 					}
 				}
-				microformat +="</ol>\n";
+				microformat +="</" + listType + ">\n";
 				//microformat += ("<span class=\"instructions\">" + data.$instructions + "</span>\n");
 			}
 			
