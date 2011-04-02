@@ -89,7 +89,7 @@
 			   minlength: jQuery.format("At least {0} characters required!")
 			 },
 			 ingredient0: {
-			   required: "Requires 1 ingrediant.",
+			   required: "Requires 1 ingredient.",
 			   minlength: jQuery.format("At least {0} characters required!")
 			 }			 
 		   },
