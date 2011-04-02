@@ -74,7 +74,7 @@
 			if(data.$photos.length>0 && data.$photos[0].length > 0) {
 				microformat += ("<img src=\"" + data.$photos[0] + "\" class=\"photo\" style=\"height:140px;width:140px;border-width:0px;\" alt=\"" + data.$recName + "\">\n");
 			}
-			if(data.$summery) microformat += ("<p class=\"summery\">" + data.$summery + "</p>\n");
+			if(data.$summary) microformat += ("<p class=\"summary\">" + data.$summary + "</p>\n");
 			microformat +="<h2>Ingredients</h2>\n";
 			microformat +="<ul>\n";
 			for(var i in data.$ingredients) {

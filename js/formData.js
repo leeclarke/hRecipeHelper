@@ -12,7 +12,7 @@ function FormData() {
 	this.$cooktime = 0;
 	this.$preptime = 0;
 	this.$photos  = [];
-	this.$summery = "";
+	this.$summary = "";
 	this.$authors = [];
 	this.$published = "";
 	this.$nutritions = [];
