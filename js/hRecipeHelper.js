@@ -46,13 +46,20 @@
 		$('#done').button();
 		$('#close').button();
 		$('#clear').button();
+		$('#previewBtn').button();
 		$('#copy').button();
 		$( "#tabs" ).tabs({
 	    	show: function(event, ui) { 		
 		 	}
 		});
+		 //Hide Preview button
+        $('#previewBtn').hide();
 		$( "#tabs" ).bind( "tabsshow", function(event, ui) {
 			if(ui.panel.id == "tabs-2") {
+				$('#previewBtn').toggle();
+                $('#previewBtn').val('Preview');
+                $('#results').show();
+                $('#preview').hide();
 				var formData = initData();
 				if($("#recipeForm").valid() && formData){
 					var output = chrome.extension.getBackgroundPage().processData(formData);
@@ -62,6 +69,8 @@
 					//fails validation, switch back to input form
 					$( "#tabs" ).tabs('select',0);
 				}
+			} else {
+                $('#previewBtn').hide();   
 			}
 		});
 
@@ -314,6 +323,21 @@
 		$("#"+fieldName + "Row"+rowCt).effect("highlight", {}, 3000);		
 		return rowCt;
 	}
+
+	/**
+     * 
+     */
+    function showPreview() {
+        debug($('#previewBtn').val());
+        if($('#previewBtn').val() == 'Preview') {
+            $('#previewBtn').val('Results');
+        } else {
+            $('#previewBtn').val('Preview');
+        }
+        $('#preview').html($('#results').val());
+        $('#results').toggle();
+        $('#preview').toggle();
+    }
 	
 
 	/**
