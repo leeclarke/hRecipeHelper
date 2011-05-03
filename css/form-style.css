@@ -22,5 +22,19 @@ th {
 
 .midItem {
 	vertical-align:middle;
-line-height: 1.5em;
+	line-height: 1.5em;
+}
+
+#options {
+	height: 400px;
+	width: 100%;
+}
+
+#options_form label {
+	font-weight: bold;
+	margin-left: 20px;
+}
+
+#options_form #save_options {
+	float: right;
 }

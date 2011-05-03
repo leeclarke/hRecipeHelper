@@ -1,3 +1,6 @@
+//TODO: Finish save Ooptions, not getting checked ATM. THen add Load and JSON function
+//TODO: make Options do stuff
+
 //TODO: add copy paste button.
 //TODO: Add ability to toggle off the line breaks in results.
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
@@ -47,6 +50,8 @@
 		$('#close').button();
 		$('#clear').button();
 		$('#previewBtn').button();
+		$('#optionsBtn').button();
+		$('#save_options').button();
 		$('#copy').button();
 		$( "#tabs" ).tabs({
 	    	show: function(event, ui) { 		
@@ -54,12 +59,16 @@
 		});
 		 //Hide Preview button
         $('#previewBtn').hide();
+        $('#optionsBtn').hide();
 		$( "#tabs" ).bind( "tabsshow", function(event, ui) {
 			if(ui.panel.id == "tabs-2") {
-				$('#previewBtn').toggle();
+				$('#previewBtn').show();
+				$('#optionsBtn').show();
                 $('#previewBtn').val('Preview');
+                $('#results-label').show();
                 $('#results').show();
                 $('#preview').hide();
+                $('#options').hide();
 				var formData = initData();
 				if($("#recipeForm").valid() && formData){
 					var output = chrome.extension.getBackgroundPage().processData(formData);
@@ -70,7 +79,8 @@
 					$( "#tabs" ).tabs('select',0);
 				}
 			} else {
-                $('#previewBtn').hide();   
+                $('#previewBtn').hide();
+                $('#optionsBtn').hide();   
 			}
 		});
 
@@ -331,14 +341,46 @@
         debug($('#previewBtn').val());
         if($('#previewBtn').val() == 'Preview') {
             $('#previewBtn').val('Results');
+            $('#preview').show();
+            $('#results-label').hide();
+            $('#results').hide();
         } else {
             $('#previewBtn').val('Preview');
+            $('#preview').hide();
+            $('#results-label').show();
+            $('#results').show();
         }
         $('#preview').html($('#results').val());
-        $('#results').toggle();
-        $('#preview').toggle();
+        $('#options').hide();
     }
-	
+    
+    function showOptions() {
+		$('#options').show();
+		$('#results').hide();
+		$('#results-label').hide();
+        $('#preview').hide();
+	}	
+
+	function saveOptions() {
+		var options = new Options();
+		console.log($('input #blt_ingrediants').is(':checked'));
+		options.blt_ingrediants = $('input #blt_ingrediants').is(':checked');
+		options.blt_nutrition = $('input #blt_nutrition').is(':checked');
+		options.nbr_instr = $('input #nbr_instr').is(':checked');
+		
+		console.log('[Options] blt_ingrediants='+options.blt_ingrediants + " blt_nutrition=" + options.blt_nutrition)
+	}
+
+	function Options() {
+		this.blt_ingrediants = true;
+		this.blt_nutrition = true;
+		this.nbr_instr = true;
+		
+		/*this.save = function() {
+			localStorage["hRecipeOptions"] = JSON.stringify(this);
+			}
+		}*/
+	}
 
 	/**
 	 * enable tabs
