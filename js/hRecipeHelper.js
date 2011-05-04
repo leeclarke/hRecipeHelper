@@ -35,6 +35,9 @@
 //DONE: fix Duration Output.
 
  	var nutritionTypes = ["Calories", "Fat", "Total Carbs", "Dietary Fiber", "Protein", "Sodium", "Cholesterol"];
+	var options = new Options();  //global, only 1 per app.
+	options.load();
+
 	$(document).ready(initForm);
 
 	/**
@@ -358,26 +361,26 @@
 		$('#results').hide();
 		$('#results-label').hide();
         $('#preview').hide();
-        var options = new Options();
-        options.load();
+       
         //TODO: set values on form.
-        
-        
+		//Set form values
+		(options.blt_ingrediants == true)? $('#blt_ingrediants').attr("checked","checked"): $('#blt_ingrediants').attr("checked","");
+		(options.blt_nutrition == true)? $('#blt_nutrition').attr("checked","checked"): $('#blt_nutrition').attr("checked","");
+		(options.nbr_instr == true)? $('#nbr_instr').attr("checked","checked"): $('#nbr_instr').attr("checked","");
+	
 	}	
 
 	function saveOptions() {
-		var options = new Options();
-		console.log($('#blt_ingrediants').attr("checked"));
 		options.blt_ingrediants = $('#blt_ingrediants').attr("checked");
 		options.blt_nutrition = $('#blt_nutrition').attr("checked");
 		options.nbr_instr = $('#nbr_instr').attr("checked");
 		
 		//console.log('[Options] blt_ingrediants='+options.blt_ingrediants + " blt_nutrition=" + options.blt_nutrition)
 		options.save();
-		console.log('JSON==' + JSON.stringify(options));
+		//console.log('JSON==' + JSON.stringify(options));
 		var opts = new Options();
 		opts.load();
-		console.log('LOADED JSON==' + JSON.stringify(opts));
+		//console.log('LOADED JSON==' + JSON.stringify(opts));
 	}
 
 	function Options() {
