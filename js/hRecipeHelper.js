@@ -1,4 +1,3 @@
-//TODO: Finish save Ooptions, not getting checked ATM. THen add Load and JSON function
 //TODO: make Options do stuff
 
 //TODO: add copy paste button.
@@ -359,16 +358,26 @@
 		$('#results').hide();
 		$('#results-label').hide();
         $('#preview').hide();
+        var options = new Options();
+        options.load();
+        //TODO: set values on form.
+        
+        
 	}	
 
 	function saveOptions() {
 		var options = new Options();
-		console.log($('input #blt_ingrediants').is(':checked'));
-		options.blt_ingrediants = $('input #blt_ingrediants').is(':checked');
-		options.blt_nutrition = $('input #blt_nutrition').is(':checked');
-		options.nbr_instr = $('input #nbr_instr').is(':checked');
+		console.log($('#blt_ingrediants').attr("checked"));
+		options.blt_ingrediants = $('#blt_ingrediants').attr("checked");
+		options.blt_nutrition = $('#blt_nutrition').attr("checked");
+		options.nbr_instr = $('#nbr_instr').attr("checked");
 		
-		console.log('[Options] blt_ingrediants='+options.blt_ingrediants + " blt_nutrition=" + options.blt_nutrition)
+		//console.log('[Options] blt_ingrediants='+options.blt_ingrediants + " blt_nutrition=" + options.blt_nutrition)
+		options.save();
+		console.log('JSON==' + JSON.stringify(options));
+		var opts = new Options();
+		opts.load();
+		console.log('LOADED JSON==' + JSON.stringify(opts));
 	}
 
 	function Options() {
@@ -376,10 +385,23 @@
 		this.blt_nutrition = true;
 		this.nbr_instr = true;
 		
-		/*this.save = function() {
+		this.save = function() {
 			localStorage["hRecipeOptions"] = JSON.stringify(this);
+		}
+		
+		this.load = function() {
+			var jStr = localStorage["hRecipeOptions"];
+			if(jStr) {
+				var tmp = jQuery.parseJSON(jStr);
+				this.blt_ingrediants = tmp.blt_ingrediants;
+				this.blt_nutrition = tmp.blt_nutrition;
+				this.nbr_instr = tmp.nbr_instr;
 			}
-		}*/
+		}
+		
+		this.delete = function() {
+			localStorage["hRecipeOptions"] = "";
+		}
 	}
 
 	/**
