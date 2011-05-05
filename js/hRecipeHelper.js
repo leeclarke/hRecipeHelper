@@ -1,5 +1,8 @@
-//TODO: make Options do stuff
+//TODO: Test options, and when on options make other button Preview. Consider different toggle.
+//TODO: add unformatted option for css
+//DONE: make Options do stuff
 
+//TODO: refactor code and clean up unnecessary junk
 //TODO: add copy paste button.
 //TODO: Add ability to toggle off the line breaks in results.
 //TODO: Add toggle to switch between pure hRecipe Spec and the Google version.
@@ -73,7 +76,7 @@
                 $('#options').hide();
 				var formData = initData();
 				if($("#recipeForm").valid() && formData){
-					var output = chrome.extension.getBackgroundPage().processData(formData);
+					var output = chrome.extension.getBackgroundPage().processData(formData, options);
 					debug("output="+output);
 					$('#results').val(output);
 				} else {
@@ -377,10 +380,14 @@
 		
 		//console.log('[Options] blt_ingrediants='+options.blt_ingrediants + " blt_nutrition=" + options.blt_nutrition)
 		options.save();
-		//console.log('JSON==' + JSON.stringify(options));
+		//update generated preview
+		var formData = initData();
+		var output = chrome.extension.getBackgroundPage().processData(formData, options);
+		debug("output="+output);
+		$('#results').val(output);	
+		//reload from storage to ensure global is correct.	
 		var opts = new Options();
 		opts.load();
-		//console.log('LOADED JSON==' + JSON.stringify(opts));
 	}
 
 	function Options() {
