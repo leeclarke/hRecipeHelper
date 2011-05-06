@@ -76,13 +76,24 @@
 			}
 			if(data.$summary) microformat += ("<p class=\"summary\">" + data.$summary + "</p>\n");
 			microformat +="<h2>Ingredients</h2>\n";
-			microformat +="<ul>\n";
-			for(var i in data.$ingredients) {
-				if(data.$ingredients[i].length >0) {
-					microformat += ("<li class=\"ingredient\">" + data.$ingredients[i] + "</li>\n");
+			if(options.blt_ingrediants == true) {
+				microformat +="<ul>\n";
+				for(var i in data.$ingredients) {
+					if(data.$ingredients[i].length >0) {
+						microformat += ("<li class=\"ingredient\">" + data.$ingredients[i] + "</li>\n");
+					}
 				}
+				microformat +="</ul>\n";
+			}else {
+				microformat +="<div>\n";
+				for(var i in data.$ingredients) {
+					if(data.$ingredients[i].length >0) {
+						microformat += ("<span class=\"ingredient\">" + data.$ingredients[i] + "</span><br>\n");
+					}
+				}
+				microformat +="</div>\n";
 			}
-			microformat +="</ul>\n";
+			
 			
 			if(data.$instructions) {
 				microformat +="<h2>Instructions</h2>\n";
@@ -148,7 +159,7 @@
 						microformat += "<div>"+toProperCase(data.$nutritionTypes[n])+": <span class=\""+ (data.$nutritionTypes[n].replace(" ","")).toLowerCase() + "\">" +(data.$nutritions[n] + "</span></div>\n");
 						}
 					}
-					microformat +="</div>\n\n";
+					microformat +="</div><br>\n\n";
 				}
 			}
 			if(data.$tags && data.$tags.length >0 && data.$tags[0].length > 0) {
