@@ -36,5 +36,11 @@ th {
 }
 
 #options_form #save_options {
-	float: right;
+	float: left;
+}
+
+#tabs-3 a{
+	text-decoration: none;
+	font-weight: bold;
+	color: #285c00;
 }

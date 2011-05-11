@@ -1,4 +1,5 @@
 //TODO: Test options, and when on options make other button Preview. Consider different toggle.
+//TODO: Add no BR toggle.
 //TODO: add unformatted option for css
 //DONE: make Options do stuff
 
