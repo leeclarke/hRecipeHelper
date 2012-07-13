@@ -1,7 +1,9 @@
-<!- 
+<!-
+THIS FILE IS INVALID, DONT USE. Need to remove this later..
+
  hRecipeHelper, a Chrome extention for building microformat compatable.
 
- Copyright (c) 2011 Lee Clarke
+ Copyright (c) 2012 Lee Clarke
 
  LICENSE:
 
@@ -28,42 +30,42 @@
 	var BLOGGER_POST = "/post-edit.g";
 	var BLOGGER_CREATE = "/post-create.g";
 
-	
+
 	/**
 	 * //Cant use Chrome with the Blogger api with out getting an ugly popup... so odd, come on google really?
 	 * Moving output to the popup to display for copy/paste
 	 */
 	function processData(data, options) {
 		var currentURL = "";
-		//debug		
+		//debug
 		var toString = "rec-name:"+ data.$recName + " ingredients:"+ data.$ingredients + " yield:" + data.$yield;
 		debug("got data:  "+toString)
 
 		var hRecipeCode = convertTohRecipe(data, options);
 		debug("hrecipe=="+hRecipeCode);
-		
+
 		return hRecipeCode;
-		//chrome.tabs.executeScript(null, {code:"updateText('"+hRecipeCode+"')"})		
+		//chrome.tabs.executeScript(null, {code:"updateText('"+hRecipeCode+"')"})
 		debug("done");
 	}
 
 	/* a few notes to be used for new features
-	chrome.tabs.getSelected(null, function(tab) {    
-	var url = tab.url;						
+	chrome.tabs.getSelected(null, function(tab) {
+	var url = tab.url;
 	jQuery.url.setUrl(url)
 	debug("HOST="+jQuery.url.attr("host"));
 
 			//var currField == document.activeElement;
 			//chrome.tabs.executeScript(null, {code:"updateText('TESTER')"})
 			//chrome.tabs.executeScript(null, {code:"console.log('active=='+document.activeElement)"})
-	});   
+	});
 	*/
-	
+
 
 	/**
 	 * Converts data to the hRecipe format with default formatting tags.
 	 */
-	function convertTohRecipe(data, options) {		
+	function convertTohRecipe(data, options) {
 		var microformat = "<div class=\"hrecipe\">\n";
 		if(data){
 			microformat += ("<h1 class=\"fn\">" + data.$recName + "</h1>\n");
@@ -93,8 +95,8 @@
 				}
 				microformat +="</div>\n";
 			}
-			
-			
+
+
 			if(data.$instructions) {
 				microformat +="<h2>Instructions</h2>\n";
 				if(options.nbr_instr == true) {
@@ -116,25 +118,25 @@
 					microformat +="</div>\n";
 				}
 			}
-			
+
 			if(data.$yield) microformat += ("<p><span style='font-weight:bold;'>Yield:</span><span class=\"yield\"> "+data.$yield+"</span></p>\n");
-			
+
 			if(data.$preptime || data.$cooktime) {
 				microformat += "<span class=\"duration\">\n";
 				var prep = "0M";
 				var cook = "0M";
-				
-				
+
+
 				if(data.$preptime) {
 					prep = parseTime(data.$preptime);
 					microformat += ("<p><span style='font-weight:bold;'>Prep Time:</span><span class=\"preptime\"><span class=\"value-title\" title=\""+prep+"\"></span> "+data.$preptime+"</span></p>\n");
-					
+
 				}
 				if(data.$cooktime) {
 					cook = parseTime(data.$cooktime);
-					microformat += ("<p><span style='font-weight:bold;'>Cook time:</span><span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span> "+data.$cooktime+"</span></p>\n");				
+					microformat += ("<p><span style='font-weight:bold;'>Cook time:</span><span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span> "+data.$cooktime+"</span></p>\n");
 				}
-				
+
 				microformat += "</span>\n";
 			}
 			if(options.blt_nutrition == true) {
@@ -148,7 +150,7 @@
 						}
 					}
 					microformat +="</ul>\n</p>\n";
-				}    
+				}
 			} else {
 				if(data.$nutritions.length>0 && data.$nutritions[0].length > 0) {
 					microformat +="<h2>Nutrition</h2>\n";
@@ -167,12 +169,12 @@
 				microformat +="<span style='font-weight:bold;'>Tags: </span>";
 				for(var t in data.$tags) {
 					tagCode.push("<span class=\"tag\">"+data.$tags[t]+"</span>");
-				}	
+				}
 				microformat += tagCode.join(',');
 				microformat +="</span>";
 			}
 		}
-		
+
 		microformat += "</div>";
 		return microformat;
 	}
@@ -202,8 +204,8 @@
 			result += (timeSplit[0]+"H"+timeSplit[1]+"M");
 		} else {
 			result += (timeValue+"M");
-		}		
-		
+		}
+
 		return result;
 	}
   </script>

@@ -415,6 +415,38 @@
 		}
 	}
 
+	function closePopUp(){
+		window.close();
+	};
+
+	function addIngredient(){
+		addFormField('ingredient'); 
+		return false;
+	};
+
+	function addInstruction(){
+		addFormField('instruction',false,null,true); 
+		return false;
+	};
+	
+	function addNutri(){
+		appendNutrition(); 
+		return false;
+	};
+	
+	function openWiki(){
+		window.open("https://github.com/leeclarke/hRecipeHelper/wiki");
+	}
+	
+	function openMicroformats(){
+		window.open("http://microformats.org/wiki/hrecipe");
+	}
+	
+	function openGnu(){
+		window.open("https://github.com/leeclarke/hRecipeHelper/blob/master/GNU_LICENSE");
+	}
+	
+	
 	/**
 	 * enable tabs
 	 */
@@ -422,3 +454,50 @@
 		$( "#tabs" ).tabs();
 	});	
 
+
+//Enable buttons
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#clear').addEventListener('click', clearFormData);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#done').addEventListener('click', closePopUp);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#previewBtn').addEventListener('click', showPreview);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#optionsBtn').addEventListener('click', showOptions);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#addIng').addEventListener('click', addIngredient);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#addInst').addEventListener('click', addInstruction);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#addNutri').addEventListener('click', addNutri);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#save_options').addEventListener('click', saveOptions);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#wiki').addEventListener('click', openWiki);
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#microformat').addEventListener('click', openMicroformats);
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#gnu').addEventListener('click', openGnu);
+});

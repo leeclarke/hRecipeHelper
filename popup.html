@@ -1,8 +1,8 @@
-<!doctype html> 
+<!doctype html>
 <meta charset=utf-8>
-<!-- hRecipeHelper, a Chrome extention for building microformat compatable. Copyright (c) 2011 Lee Clarke LICENSE: GNU v2	-->
-<link type="text/css" href="css/le-frog-cust/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />	
-<link type="text/css" href="css/form-style.css" rel="Stylesheet" />	
+<!-- hRecipeHelper, a Chrome extention for building microformat compatable. Copyright (c) 2012 Lee Clarke LICENSE: GNU v2	-->
+<link type="text/css" href="css/le-frog-cust/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />
+<link type="text/css" href="css/form-style.css" rel="Stylesheet" />
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.url.js"></script>
@@ -21,7 +21,7 @@
 		<li><a href="#tabs-2">hRecipe Results</a></li>
 		<li><a href="#tabs-3">About</a></li>
 	</ul>
-	<div align="right" style"min-width:465px"><input type="button" id="previewBtn" value="Preview" onClick='showPreview();'><input type="button" id="optionsBtn" value="Options" onClick='showOptions();'><input type="button" id="clear" value="Clear" onClick='clearFormData();'><input type="button" id="done" value="Close" onClick='window.close();'></div>
+	<div align="right" style"min-width:465px"><input type="button" id="previewBtn" value="Preview"><input type="button" id="optionsBtn" value="Options"><input type="button" id="clear" value="Clear" ><input type="button" id="done" value="Close"></div>
 	<div id="tabs-1">
 		<table>
 			<tr><th><label for="recName">Title</label></th><td><input type="text" id="recName" name="recName" class="large-field"/></td></tr>
@@ -29,13 +29,13 @@
 			<tr><th><label for="published">Published</label></th><td><input type="text" id="published" name="published"/></td></tr>
 			<tr><th><label for="yield">Yield</label></th><td><input type="text" id="yield" name="yield"/></td></tr>
 			<tr><th><label for="summary">Summary</label></th><td><textarea id="summary" name="summary" rows="3" cols="30"></textarea></td></tr>
-			<tr><th><label for="ingredient">Ingredients </label></th><td><a href="#" onClick="addFormField('ingredient'); return false;">add</a></td><tr>
+			<tr><th><label for="ingredient">Ingredients </label></th><td><a href="#" id="addIng">add</a></td><tr>
 			<tr><td colspan=2>
 			<ul id='ingredientList'>
 				<li><input type="text" id="ingredient0" name="ingredient0" class="xlarge-field"/></li>
 			</ul>
 			</td></tr>
-			<tr><th colspan=2><label for="instructions">Instructions </label></th><td><a href="#" onClick="addFormField('instruction',false,null,true); return false;">add a step</a></th>
+			<tr><th colspan=2><label for="instructions">Instructions </label></th><td><a href="#" id="addInst" >add a step</a></th>
 			<!--<tr><td colspan=2><textarea id="instructions" name="instructions" rows="6" cols="43"></textarea></td></tr>-->
 			<tr><td colspan=2>
 				<ol id='instructionList'>
@@ -45,8 +45,8 @@
 			<tr><th><label for="preptime">Prep Time</label></th><td><input type="text" id="preptime" name="preptime" class="large-field"/></td></tr>
 			<tr><th><label for="cooktime">Cook Time</label></th><td><input type="text" id="cooktime" name="cooktime" class="large-field"/></td></tr>
 			<tr><th><label for="photo">Photo</label></th><td><input type="text" id="photo" name="photo"  class="large-field"/></td></tr>
-			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" onClick="appendNutrition(); return false;" alt="Add another">add</a></td></tr>
-			<tr><td colspan=2>		
+			<tr><th><label for="nutrition">Nutrition </label></th><td><a href="#" id="addNutri" alt="Add another">add</a></td></tr>
+			<tr><td colspan=2>
 			<ul id='nutritionList'>
 				<li><input type="text" id="nutrition" name="nutrition0" class="nutrition0"/> <select id="nutritionType" class="nutritionType"></select></li>
 			</ul>
@@ -74,10 +74,10 @@
 	</div>
 	<div id="tabs-3">
 		<div>
-			<p style="text-align: center;"><a href="https://github.com/leeclarke/hRecipeHelper/wiki" alt="help">Need help? Check the wiki!</a><br>Bugs or feedback? Let me know! lees2bytes at gmail</p>
-			<p><b>hRecipeHelper</b> makes it easy to include microformatted <a href="http://microformats.org/wiki/hrecipe">hRecipes</a> in your blogs and webpages ensuring that Google or any other Recipe related tool can easily read the Information. Version 1.2.2 supports hRecipe 0.22 Format and is compatable with Google search.</p>
-			<p><small><b>hRecipeHelper</b> is Free Software and distributed under a GNUv2 license, <a href="https://github.com/leeclarke/hRecipeHelper/blob/master/GNU_LICENSE" style="color:#285c00;text-decoration: none;font-weight: bold;">click</a> here if ya really want to know more!<br><br>
-			 Copyright &copy 2011 <b>Lee Clarke</b></small></p>
+			<p style="text-align: center;"><a href="#" id="wiki" alt="help">Need help? Check the wiki!</a><br>Bugs or feedback? Let me know! lees2bytes at gmail</p>
+			<p><b>hRecipeHelper</b> makes it easy to include microformatted <a href="#" id="microformat">hRecipes</a> in your blogs and webpages ensuring that Google or any other Recipe related tool can easily read the Information. Version 1.3 supports hRecipe 0.22 Format and is compatable with Google search.</p>
+			<p><small><b>hRecipeHelper</b> is Free Software and distributed under a GNUv2 license, <a href="#" id="gnu" style="color:#285c00;text-decoration: none;font-weight: bold;">click</a> here if ya really want to know more!<br><br>
+			 Copyright &copy 2012 <b>Lee Clarke</b></small></p>
 		</div>
 	<img src="clearpixel.gif" width=465px height=1px>
 	</div>
