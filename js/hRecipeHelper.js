@@ -48,6 +48,7 @@
 	 * Initializes the Form after load.
 	 */
 	function initForm() {
+		$('#tabs').hide();	
 		debug("Load Blog posting.");
 		//chrome.extension.getBackgroundPage().checkURLAction('load');
 		$('#published').datepicker();
@@ -142,6 +143,10 @@
 	function loadForm() {
 		var formData = loadFormData();
 		setFormValues(formData);
+		$('#tabs').ScrollTo();
+		$('#tabs').show();//Tab is hidden until rendered, then shown to avoid scrolling about.
+		$('#recName').focusEnd();
+		
 	}
 
 	/**
@@ -150,6 +155,8 @@
 	function clearFormData() {
 		deleteFormData();
 		setFormValues(new FormData());
+		$('#recName').focus();
+		$('#tabs').ScrollTo();
 	}
 
 	/**
@@ -291,6 +298,8 @@
 		if(selectedType) {
 			$('.'+selectName).val(selectedType);
 		}
+		$('.'+selectName).focus();
+		$('.'+selectName).ScrollTo();
 	}
 
 	/**
@@ -420,12 +429,18 @@
 	};
 
 	function addIngredient(){
-		addFormField('ingredient'); 
+		fieldNum = addFormField('ingredient');
+		$('#ingredientRow'+fieldNum+' input').focusEnd();
+		//$('#ingredientRow'+fieldNum).ScrollTo();
+		$('#addIng').ScrollTo();
 		return false;
 	};
 
 	function addInstruction(){
-		addFormField('instruction',false,null,true); 
+		fieldNum = addFormField('instruction',false,null,true); 
+		selectName = '#instructionRow'+fieldNum + ' textarea';
+		$(selectName).focusEnd();
+		$(selectName).ScrollTo();
 		return false;
 	};
 	
@@ -501,3 +516,41 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('#gnu').addEventListener('click', openGnu);
 });
+
+$.fn.setCursorPosition = function(pos) {
+  this.each(function(index, elem) {
+    if (elem.setSelectionRange) {
+      elem.setSelectionRange(pos, pos);
+    } else if (elem.createTextRange) {
+      var range = elem.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+    }
+  });
+  return this;
+};
+
+$.fn.setSelection = function(selectionStart, selectionEnd) {
+    if(this.length == 0) return this;
+    input = this[0];
+
+    if (input.createTextRange) {
+        var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+    } else if (input.setSelectionRange) {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+    }
+
+    return this;
+}
+
+$.fn.focusEnd = function(){
+    this.setCursorPosition(this.val().length);
+            return this;
+}
