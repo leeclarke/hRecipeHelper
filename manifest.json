@@ -13,18 +13,10 @@
     "default_icon": "hRecipeIcon-16.png",
     "default_popup": "popup.html"
   },
- // "content_scripts": [
- //   {
- //     "matches": ["http://*/*", "https://*/*"], 
- //     "js": [ "js/jquery-1.4.4.min.js", "content_script.js"],
-//	   "all_frames": true
- //   }
- // ],
   "permissions": [
 	"tabs",    
 	"http://*/*",
 	"https://*/*"
   ],
-  //"content_security_policy": "[POLICY STRING GOES HERE]",
   "minimum_chrome_version": "8.0"
 }
