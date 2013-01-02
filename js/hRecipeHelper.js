@@ -1,8 +1,6 @@
-//TODO: Test options, and when on options make other button Preview. Consider different toggle.
-//TODO: Add no BR toggle.
+//TODO: Add alt formatting for ingredients  and Steps. Toggle to Table format for ingredients  and paragraphs for both ingredients  and steps.
+//TODO: On options display Preview Button not Results. Consider different toggle.
 //TODO: add unformatted option for css
-//DONE: make Options do stuff
-
 //TODO: refactor code and clean up unnecessary junk
 //TODO: add copy paste button.
 //TODO: Add ability to toggle off the line breaks in results.
@@ -11,6 +9,9 @@
 //TODO: reverse parse to populate from current page/field for editing.
 //TODO: Add Options (Allow toggle of save previous data and when to discard. (no save, only if already generated hRecipe, only on clear button.))
 
+//DONE: make Options do stuff
+//DONE: Fix Steps to read "instructions" not "ingrediants", oops
+//DONE: Test options, and when 
 //DONE: consider making Instr fields a 2row textArea
 //DONE: BUG:  Nutritional items are being dropped if array > 1
 //DONE: Remove blank array items.
@@ -407,7 +408,7 @@
 		
 		this.save = function() {
 			localStorage["hRecipeOptions"] = JSON.stringify(this);
-		}
+		};
 		
 		this.load = function() {
 			var jStr = localStorage["hRecipeOptions"];
@@ -417,11 +418,11 @@
 				this.blt_nutrition = tmp.blt_nutrition;
 				this.nbr_instr = tmp.nbr_instr;
 			}
-		}
+		};
 		
 		this.delete = function() {
 			localStorage["hRecipeOptions"] = "";
-		}
+		};
 	}
 
 	function closePopUp(){

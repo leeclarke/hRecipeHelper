@@ -96,7 +96,7 @@ function convertTohRecipe(data, options) {
 				microformat +="<" + listType + ">\n";
 				for(i in data.$instructions) {
 					if(data.$instructions[i].length >0) {
-						microformat += ("<li class=\"ingredient\">" + data.$instructions[i] + "</li>\n");
+						microformat += ("<li class=\"instructions\">" + data.$instructions[i] + "</li>\n");
 					}
 				}
 				microformat +="</" + listType + ">\n";
@@ -104,7 +104,7 @@ function convertTohRecipe(data, options) {
 				microformat +="<div>\n";
 				for(i in data.$instructions) {
 					if(data.$instructions[i].length >0) {
-						microformat += ("<div class=\"ingredient\">" + data.$instructions[i] + "</div><br>\n");
+						microformat += ("<div class=\"instructions\">" + data.$instructions[i] + "</div><br>\n");
 					}
 				}
 				microformat +="</div>\n";
