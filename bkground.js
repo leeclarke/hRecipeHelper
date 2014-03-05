@@ -114,22 +114,28 @@ function convertTohRecipe(data, options) {
 		if(data.$yield) microformat += ("<p><span style='font-weight:bold;'>Yield:</span><span class=\"yield\"> "+data.$yield+"</span></p>\n");
 
 		if(data.$preptime || data.$cooktime) {
-			microformat += "<span class=\"duration\">\n";
+			//microformat += "<span class=\"duration\">\n";
 			var prep = "0M";
 			var cook = "0M";
 
 
 			if(data.$preptime) {
 				prep = parseTime(data.$preptime);
-				microformat += ("<p><span style='font-weight:bold;'>Prep Time:</span><span class=\"preptime\"><span class=\"value-title\" title=\""+prep+"\"></span> "+data.$preptime+"</span></p>\n");
+				microformat += ("<span style='font-weight:bold;'>Prep Time:</span><span class=\"preptime\"><span class=\"value-title\" title=\""+prep+"\"></span> "+ formatReadableTime(prep)+"</span></p>\n");
 
 			}
 			if(data.$cooktime) {
 				cook = parseTime(data.$cooktime);
-				microformat += ("<p><span style='font-weight:bold;'>Cook time:</span><span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span> "+data.$cooktime+"</span></p>\n");				
+				microformat += ("<p><span style='font-weight:bold;'>Cook time:</span><span class=\"cooktime\"><span class=\"value-title\" title=\""+cook+"\"></span> "+ formatReadableTime(cook)+"</span></p>\n");				
 			}
 
-			microformat += "</span>\n";
+			data.$duration = formatArrayToISO8601(addFormattedTimes(prep, cook));
+
+			if(data.$duration) {
+				microformat += ("<p><span style='font-weight:bold;'>Total time:</span><span class=\"duration\"><span class=\"value-title\" title=\""+data.$duration+"\"></span> "+ formatReadableTime(data.$duration)+"</span></p>\n");				
+			}
+			
+			//microformat += "</span>\n";
 		}
 		if(options.blt_nutrition == true) {
 			if(data.$nutritions.length>0 && data.$nutritions[0].length > 0) {
@@ -199,4 +205,60 @@ function parseTime(timeValue) {
 	}		
 
 	return result;
+}
+
+/**
+ * Adds two time values formatted in the PT00H00M format
+ */
+function addFormattedTimes(time1, time2){
+    var hrs = 0;
+    var mins = 0;
+    
+    var splitTime1 = time1.replace(/PT/g,'').split("H");
+    var splitTime2 = time2.replace(/PT/g,'').split("H");
+    
+    if(time1){
+        var timeVal = parseFormattedTime(splitTime1);
+        hrs+= timeVal[0];
+        mins+= timeVal[1];
+    }
+    
+    if(time2){
+        var timeVal = parseFormattedTime(splitTime2);
+        hrs+= timeVal[0];
+        mins+= timeVal[1];
+    }
+    return [hrs,mins];
+}
+/**
+ * Return an array of [hrs,mins]
+ */
+function parseFormattedTime(timeValue){
+    var hrs = 0;
+    var mins = 0;
+    if(timeValue.length >1){
+        hrs = parseInt(timeValue[0]);
+        mins = parseInt(timeValue[1].replace(/M/g,''));
+        
+    } else {
+        mins= parseInt(timeValue[0].replace(/M/g,''));
+    }
+    
+    return [hrs,mins];
+}
+
+function formatArrayToISO8601(hrMinArray){
+    var result = "PT";
+    if(hrMinArray[0] != 0){
+        result += hrMinArray[0] + "H";
+    }
+    result += hrMinArray[1] + "M";
+    return result;
+}
+
+/**
+ * Format iso8601 time to readable.
+ */
+function formatReadableTime(isoTime){
+	return isoTime.replace(/PT/g,'').replace(/H/g,' hrs. ').replace(/M/g,' mins. ')
 }

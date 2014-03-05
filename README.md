@@ -13,6 +13,7 @@ hRecipeHelper is a Chrome extension that gives bloggers a simple interface to en
 - Works with Google's Rich Snippets.
 - Takes the drudgery out of formatting Recipes in HTML.
 - Helps Google index recipes for the Google Recipe Search.
+- Also supposets the New Pinterest - rich pins!
 
 ## Further Info
 Most of the information reguarding the project should be found in the wiki
