@@ -1,7 +1,7 @@
 {
   "name": "hRecipe Helper",
   "version": "1.3.3",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "description": "A tool to help format your recipes for the Google Recipe View, hRecipe micro-format and for the Pintrest Rich Pin format.",
   "icons": { "16": "hRecipeIcon-16.png",
            "48": "hRecipeIcon-48.png",
